@@ -1,6 +1,8 @@
-﻿using AnalisadorDeBytes.Dominio;
+﻿using AnalisadorDeBytes.Core.BuscadorWeb;
+using AnalisadorDeBytes.Dominio;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
+using Moq;
 using System;
 using Xunit;
 
@@ -16,11 +18,12 @@ namespace AnalisadorDeBytes.Testes.Dominio
         private readonly IBuscarTextoEmSite _buscarTextoEmSite;
         private readonly IContadorDeBytes _contadorDeBytes;
         private readonly IGeradorDeArquivo _geradorDeArquivo;
+        private readonly Mock<IBuscadorWeb> _buscadorWeb = new Mock<IBuscadorWeb>();
 
 
         public AnalisadorDeBytesTeste()
         {
-            _buscarTextoEmSite = new BuscarTextoEmSite();
+            _buscarTextoEmSite = new BuscarTextoEmSite(_buscadorWeb.Object);
             _contadorDeBytes = new ContadorDeBytes();
             _geradorDeArquivo = new GeradorDeArquivo();
             _analisador = new Analisador(_buscarTextoEmSite, _contadorDeBytes, _geradorDeArquivo);
@@ -31,6 +34,10 @@ namespace AnalisadorDeBytes.Testes.Dominio
         [Fact]
         public async void ProcessarAsync_DeveriaGerarMetricas()
         {
+            _buscadorWeb.Setup(x => x.Buscar(new Uri(_siteWebParaBuscarTextos)))
+                .ReturnsAsync(_textoMockado);
+
+
             var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmMegaBytes);
         }
 
