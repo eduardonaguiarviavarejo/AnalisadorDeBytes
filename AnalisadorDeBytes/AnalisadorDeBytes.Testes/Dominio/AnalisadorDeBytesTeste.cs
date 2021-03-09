@@ -1,9 +1,6 @@
 ﻿using AnalisadorDeBytes.Dominio;
-using AnalisadorDeBytes.Dominio.Comandos;
-using AnalisadorDeBytes.Dominio.Respostas;
+using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
-using Moq;
-using System;
 using Xunit;
 
 namespace AnalisadorDeBytes.Testes.Dominio
@@ -13,20 +10,22 @@ namespace AnalisadorDeBytes.Testes.Dominio
         private readonly string _caminhoFisicoArquivo = @"c:/dev";
         private readonly int _tamanhoMaximoBufferEmMegaBytes = 1;
         private readonly string _texto = "O fluxo deve se repetir até que o arquivo tenha o tamanho de 100MB como tamanho padrão";
-        private readonly Analisador _analisador;
-        private readonly Mock<IBuscarTextoEmSite> _buscarTextoEmSite = new Mock<IBuscarTextoEmSite>();
+        private readonly IAnalisador _analisador;
+        private readonly IBuscarTextoEmSite _buscarTextoEmSite;
+        private readonly IContadorDeBytes _contadorDeBytes;
+
 
         public AnalisadorDeBytesTeste()
         {
-            _analisador = new Analisador(_buscarTextoEmSite.Object);
+            _buscarTextoEmSite = new BuscarTextoEmSite();
+            _contadorDeBytes = new ContadorDeBytes();
+            _analisador = new Analisador(_buscarTextoEmSite, _contadorDeBytes);
         }
 
         [Fact]
         public async void ProcessarAsync_DeveriaGerarMetricas()
         {
-            _buscarTextoEmSite.Setup(x => x.ExecutarAsync(new BuscarTextoEmSiteComandos(new Uri("http://www.lerolero.com.br"))))
-                .ReturnsAsync(new BuscarTextoEmSiteResposta(_texto));
-
+            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, _tamanhoMaximoBufferEmMegaBytes);
         }
 
 
