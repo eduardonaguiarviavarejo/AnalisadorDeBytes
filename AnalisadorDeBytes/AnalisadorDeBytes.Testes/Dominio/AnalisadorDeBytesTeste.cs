@@ -1,6 +1,7 @@
 ﻿using AnalisadorDeBytes.Dominio;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
+using System;
 using Xunit;
 
 namespace AnalisadorDeBytes.Testes.Dominio
@@ -9,23 +10,28 @@ namespace AnalisadorDeBytes.Testes.Dominio
     {
         private readonly string _caminhoFisicoArquivo = @"c:/dev";
         private readonly int _tamanhoMaximoBufferEmMegaBytes = 1;
-        private readonly string _texto = "O fluxo deve se repetir até que o arquivo tenha o tamanho de 100MB como tamanho padrão";
+        private readonly string _siteWebParaBuscarTextos = "http://lerolero.com.br";
+        private readonly string _textoMockado = "O fluxo deve se repetir até que o arquivo tenha o tamanho de 100MB como tamanho padrão";
         private readonly IAnalisador _analisador;
         private readonly IBuscarTextoEmSite _buscarTextoEmSite;
         private readonly IContadorDeBytes _contadorDeBytes;
+        private readonly IGeradorDeArquivo _geradorDeArquivo;
 
 
         public AnalisadorDeBytesTeste()
         {
             _buscarTextoEmSite = new BuscarTextoEmSite();
             _contadorDeBytes = new ContadorDeBytes();
-            _analisador = new Analisador(_buscarTextoEmSite, _contadorDeBytes);
+            _geradorDeArquivo = new GeradorDeArquivo();
+            _analisador = new Analisador(_buscarTextoEmSite, _contadorDeBytes, _geradorDeArquivo);
         }
+
+
 
         [Fact]
         public async void ProcessarAsync_DeveriaGerarMetricas()
         {
-            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, _tamanhoMaximoBufferEmMegaBytes);
+            var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmMegaBytes);
         }
 
 
@@ -33,13 +39,13 @@ namespace AnalisadorDeBytes.Testes.Dominio
         [Fact]
         public async void AnalyseAsync_DeveriaGerarMetricasComTamanhoDoBufferDiferente()
         {
-            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, 5);
+            var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmMegaBytes);
         }
 
 
 
         [Fact]
-        public void AnalyseAsync_DeveriaGerarMetricasFallbackCrawl()
+        public void AnalyseAsync_DeveriaGerarMetricasFallbackBusca()
         {
 
         }
