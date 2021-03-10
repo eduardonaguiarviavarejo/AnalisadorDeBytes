@@ -9,4 +9,8 @@
     <PackageReference Include="Abot" Version="2.0.69" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dominio\Estrategia\" />
+  </ItemGroup>
+
 </Project>
