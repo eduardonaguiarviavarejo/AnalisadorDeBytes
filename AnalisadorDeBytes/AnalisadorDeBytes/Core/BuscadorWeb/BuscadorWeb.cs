@@ -64,7 +64,6 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
             };
 
 
-
             
             await crawler.CrawlAsync(urlDoSiteASerBuscado);
 
