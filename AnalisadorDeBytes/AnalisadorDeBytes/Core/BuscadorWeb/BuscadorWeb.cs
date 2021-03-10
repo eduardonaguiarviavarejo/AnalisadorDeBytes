@@ -58,7 +58,10 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
 
 
 
-            crawler.PageCrawlDisallowed += (object sender, PageCrawlDisallowedArgs e);
+            crawler.PageCrawlDisallowed += async (object sender, PageCrawlDisallowedArgs e) =>
+            {
+                todoOTtextoASerRetornado = await _fallbackStrategy.RetornarTexto();
+            };
 
 
 
@@ -68,11 +71,6 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
 
 
             return todoOTtextoASerRetornado;
-        }
-
-        private void (object sender, PageCrawlDisallowedArgs e)(object sender, PageCrawlDisallowedArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }
