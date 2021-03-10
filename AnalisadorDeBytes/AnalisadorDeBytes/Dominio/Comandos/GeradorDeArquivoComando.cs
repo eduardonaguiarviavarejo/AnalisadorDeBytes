@@ -6,19 +6,19 @@ namespace AnalisadorDeBytes.Dominio.Comandos
     {
         public GeradorDeArquivoComando(
             string caminhoDoArquivo,
-            decimal tamanhoDoBuffer,
+            int tamanhoDoBuffer,
             decimal tamanhoDoTexto,
-            string texto)
+            string textoAnalisado)
         {
             CaminhoDoArquivo = caminhoDoArquivo;
             TamanhoDoBuffer = tamanhoDoBuffer;
             TamanhoDoTexto = tamanhoDoTexto;
-            Texto = texto;
+            TextoAnalisado = textoAnalisado;
         }
 
         public string CaminhoDoArquivo { get; private set; }
-        public decimal TamanhoDoBuffer { get; private set; }
+        public int TamanhoDoBuffer { get; private set; } 
         public decimal TamanhoDoTexto { get; private set; }
-        public string Texto { get; private set; }
+        public string TextoAnalisado { get; private set; }
     }
 }
