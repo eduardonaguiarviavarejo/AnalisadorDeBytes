@@ -9,12 +9,16 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
     public class BuscadorWeb : IBuscadorWeb
     {
         private readonly BuscadorWebConfig _buscadorWebConfig;
+        private readonly IFallbackStrategy _fallbackStrategy;
 
 
 
-        public BuscadorWeb(BuscadorWebConfig buscadorWebConfig)
+        public BuscadorWeb(
+            BuscadorWebConfig buscadorWebConfig, 
+            IFallbackStrategy fallbackStrategy)
         {
             _buscadorWebConfig = buscadorWebConfig;
+            _fallbackStrategy = fallbackStrategy;
         }
 
 
@@ -41,7 +45,10 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
 
             crawler.PageCrawlCompleted += (object sender, PageCrawlCompletedArgs e) =>
             {
-                var texto = e.CrawledPage.AngleSharpHtmlDocument.All.Where(x => x.LocalName == _buscadorWebConfig.SeletorDeBuscaTextual);
+                var texto = e.CrawledPage
+                .AngleSharpHtmlDocument
+                .All
+                .Where(x => x.LocalName == _buscadorWebConfig.SeletorDeBuscaTextual);
 
                 foreach (var item in texto)
                 {
@@ -51,12 +58,21 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
 
 
 
+            crawler.PageCrawlDisallowed += (object sender, PageCrawlDisallowedArgs e);
+
+
+
             
             await crawler.CrawlAsync(urlDoSiteASerBuscado);
 
 
 
             return todoOTtextoASerRetornado;
+        }
+
+        private void (object sender, PageCrawlDisallowedArgs e)(object sender, PageCrawlDisallowedArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
