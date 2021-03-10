@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Xunit;
 
 namespace AnalisadorDeBytes.Testes.Dominio
 {
-    class GeradorDeArquivoTeste
+    public class GeradorDeArquivoTeste
     {
+        public GeradorDeArquivoTeste()
+        {
+
+        }
+
+        [Fact]
+        public void ExecutarAsync_DevGerarArquivo()
+        {
+
+        }
     }
 }
