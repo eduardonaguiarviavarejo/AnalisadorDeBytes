@@ -11,9 +11,9 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 {
     public class BuscarTextoEmSite : IBuscarTextoEmSite
     {
-        private readonly IBuscadorWeb _buscadorWeb;        
+        private readonly IBuscadorDeTextoWeb _buscadorWeb;        
 
-        public BuscarTextoEmSite(IBuscadorWeb buscadorWeb)
+        public BuscarTextoEmSite(IBuscadorDeTextoWeb buscadorWeb)
         {
             _buscadorWeb = buscadorWeb;            
         }

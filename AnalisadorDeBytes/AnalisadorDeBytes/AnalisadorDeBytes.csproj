@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Abot" Version="2.0.69" />
+    <PackageReference Include="Selenium.WebDriver" Version="3.141.0" />
   </ItemGroup>
 
   <ItemGroup>

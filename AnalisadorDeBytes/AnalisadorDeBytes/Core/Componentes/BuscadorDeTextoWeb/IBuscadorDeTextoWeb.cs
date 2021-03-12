@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes.Core.BuscadorWeb
 {
-    public interface IBuscadorWeb
+    public interface IBuscadorDeTextoWeb
     {
        Task<string> Buscar(Uri urlDoSiteASerBuscado);
     }
