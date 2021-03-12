@@ -1,4 +1,5 @@
-﻿using AnalisadorDeBytes.Dominio.Comandos;
+﻿using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
+using AnalisadorDeBytes.Dominio.Comandos;
 using AnalisadorDeBytes.Dominio.Respostas;
 using AnalisadorDeBytes.IoC;
 using System.Net.Http;
@@ -8,22 +9,18 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 {
     public class ContadorDeBytes : IContadorDeBytes
     {
-        private static readonly HttpClient client = new HttpClient();        
+        private readonly IContadorDeBytesWeb _contadorDeBytesWeb;
+
+        public ContadorDeBytes(IContadorDeBytesWeb contadorDeBytesWeb)
+        {
+            _contadorDeBytesWeb = contadorDeBytesWeb;
+        }
+
 
 
         public async Task<ContadorDeBytesResposta> ExecutarAsync(ContadorDeBytesComando comando)
         {
-            
-            HttpResponseMessage response = await client.GetAsync("https://mothereff.in/byte-counter#uasdASDasdsdfsdfasdfasdfasdfasdfasdfasdfaqwsasdasdasdasdasd");
-
-
-            string responseBody = null;
-
-
-            responseBody = await response.Content.ReadAsStringAsync();
-            
-
-            return new ContadorDeBytesResposta(213213);
+            return new ContadorDeBytesResposta(await _contadorDeBytesWeb.ContarBytesPorTextoAsync(comando.TextoDeEntrada));
         }
     }
 }

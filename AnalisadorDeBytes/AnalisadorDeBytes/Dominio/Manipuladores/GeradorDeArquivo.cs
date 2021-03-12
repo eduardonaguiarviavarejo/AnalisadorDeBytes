@@ -33,7 +33,7 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
             {
                 textoIncremental += comando.TextoAnalisado;
 
-                tamanhoDoTexto = RetornarTamanhoEmBytesDaString(comando.TextoAnalisado);
+                tamanhoDoTexto = RetornarTamanhoEmBytesDaString(textoIncremental);
 
                 numeroDeIteracoes++;
             }

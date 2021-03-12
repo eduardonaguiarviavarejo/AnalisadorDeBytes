@@ -34,20 +34,31 @@ namespace AnalisadorDeBytes.Dominio
 
 
 
+
             var contadorDeBytesComando = new ContadorDeBytesComando(buscarTextoEmSiteResposta.TextoRecuperadoDaWeb);
             var contadorDeBytesResposta = await _contadorDeBytes.ExecutarAsync(contadorDeBytesComando);
 
 
 
+
             var geradorDeArquivoComando = new GeradorDeArquivoComando(
                 caminhoDoArquivo, 
-                tamanhoDoBuffer, 
-                contadorDeBytesResposta.TamanhoDoTextoEmBytes, 
+                tamanhoDoBuffer,                 
                 buscarTextoEmSiteResposta.TextoRecuperadoDaWeb);
 
-            var geradorDeArquivoResposta = _geradorDeArquivo.ExecutarAsync(geradorDeArquivoComando);
+            
+            
+            
+            var geradorDeArquivoResposta = await _geradorDeArquivo.ExecutarAsync(geradorDeArquivoComando);
 
-            return new InformacoesDaAnalise();
+            
+            
+            
+            return new InformacoesDaAnalise(
+                geradorDeArquivoResposta.NomeDoArquivo, 
+                geradorDeArquivoResposta.TamanhoDoArquivo, 
+                geradorDeArquivoResposta.CaminhoFisico, 
+                geradorDeArquivoResposta.Metricas);
         }
     }
 }

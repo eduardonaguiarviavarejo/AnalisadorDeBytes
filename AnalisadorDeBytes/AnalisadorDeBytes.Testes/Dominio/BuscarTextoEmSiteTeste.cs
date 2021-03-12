@@ -14,7 +14,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
         private readonly string _siteParaBuscarTextosFake = "http://lerolero22.com.br";
         private readonly string _textoMockado = "O fluxo deve se repetir até que o arquivo tenha o tamanho de 100MB como tamanho padrão";
         private readonly IBuscarTextoEmSite _buscarTextoEmSite;
-        private readonly Mock<IBuscadorWeb> _buscadorWeb = new Mock<IBuscadorWeb>();
+        private readonly Mock<IBuscadorDeTextoWeb> _buscadorWeb = new Mock<IBuscadorDeTextoWeb>();
 
 
         public BuscarTextoEmSiteTeste()
