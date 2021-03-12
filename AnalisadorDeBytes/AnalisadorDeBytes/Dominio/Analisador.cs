@@ -43,8 +43,7 @@ namespace AnalisadorDeBytes.Dominio
 
             var geradorDeArquivoComando = new GeradorDeArquivoComando(
                 caminhoDoArquivo, 
-                tamanhoDoBuffer, 
-                contadorDeBytesResposta.TamanhoDoTextoEmBytes, 
+                tamanhoDoBuffer,                 
                 buscarTextoEmSiteResposta.TextoRecuperadoDaWeb);
 
             

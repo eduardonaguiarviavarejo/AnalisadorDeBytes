@@ -1,6 +1,4 @@
-﻿using AnalisadorDeBytes.Core.BuscadorWeb;
-using AnalisadorDeBytes.Dominio.Manipuladores;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes
