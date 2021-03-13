@@ -1,4 +1,5 @@
 ﻿using AnalisadorDeBytes.Dominio.Comandos;
+using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.Dominio.Respostas;
 using AnalisadorDeBytes.IoC;
 using System;
@@ -48,6 +49,8 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 
 
             diagnostico.Stop();
+
+
 
             return new GeradorDeArquivoResposta(nomeDoArquivo, buffer.Length, comando.CaminhoDoArquivo, new Metricas(numeroDeIteracoes, diagnostico.Elapsed, diagnostico.Elapsed / numeroDeIteracoes));
         }

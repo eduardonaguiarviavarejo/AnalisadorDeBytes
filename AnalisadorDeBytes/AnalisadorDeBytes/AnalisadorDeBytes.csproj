@@ -11,7 +11,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dominio\Estrategia\" />
+    <Compile Update="Dominio\Estrategia\TextosAleatorios.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TextosAleatorios.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Dominio\Estrategia\TextosAleatorios.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TextosAleatorios.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

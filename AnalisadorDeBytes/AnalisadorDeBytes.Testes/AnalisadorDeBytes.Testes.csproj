@@ -26,4 +26,9 @@
     <ProjectReference Include="..\AnalisadorDeBytes\AnalisadorDeBytes.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infra\" />
+    <Folder Include="App\" />
+  </ItemGroup>
+
 </Project>

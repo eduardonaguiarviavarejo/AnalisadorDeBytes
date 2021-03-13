@@ -1,4 +1,9 @@
-﻿using AnalisadorDeBytes.Dominio.Comandos;
+﻿using AnalisadorDeBytes.Core.BuscadorWeb;
+using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
+using AnalisadorDeBytes.Core.Componentes.GeradorDeLog;
+using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.Dominio.Comandos;
+using AnalisadorDeBytes.Dominio.Estrategia;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
 using System;
@@ -8,29 +13,33 @@ namespace AnalisadorDeBytes.Dominio
 {
     public class Analisador : IAnalisador
     {
-        private readonly IBuscarTextoEmSite _buscarTextoEmSite;
-        private readonly IContadorDeBytes _contadorDeBytes;
-        private readonly IGeradorDeArquivo _geradorDeArquivo;
+        private IBuscadorDeTextoWeb _buscadorDeTextoWeb; 
+        private IBuscarTextoEmSite _buscarTextoEmSite; 
+        private IContadorDeBytes _contadorDeBytes;
+        private IGeradorDeArquivo _geradorDeArquivo;
+        private IContadorDeBytesWeb _contadorDeBytesWeb;
+        private IBuscadorDeTextoWebFallback _buscadorDeTextoWebFallback;
+        private IContadorDeBytesWebFallback _contadorDeBytesWebFallback;
+        private IGeradorDeLog _geradorDeLog;
 
-
-
-        public Analisador(
-            IBuscarTextoEmSite buscarTextoEmSite, 
-            IContadorDeBytes contadorDeBytes, 
-            IGeradorDeArquivo geradorDeArquivo)
+        public Analisador()
         {
-            _buscarTextoEmSite = buscarTextoEmSite;
-            _contadorDeBytes = contadorDeBytes;
-            _geradorDeArquivo = geradorDeArquivo;
+            _geradorDeLog = new GeradorDeLog();
+            _buscadorDeTextoWebFallback = new GeradorDeTextoAleatorioFallback();
+            _buscadorDeTextoWeb = new BuscadorDeTextoWeb(_buscadorDeTextoWebFallback, _geradorDeLog);
+            _buscarTextoEmSite = new BuscarTextoEmSite(_buscadorDeTextoWeb);
+            _contadorDeBytesWeb = new ContadorDeBytesWeb(_contadorDeBytesWebFallback, _geradorDeLog);
+            _contadorDeBytes = new ContadorDeBytes(_contadorDeBytesWeb);
+            _geradorDeArquivo = new GeradorDeArquivo();
         }
 
 
 
 
-        public async Task<InformacoesDaAnalise> ProcessarAsync(Uri paginaWebParaBuscaDosTextos, string caminhoDoArquivo, int tamanhoDoBuffer = 1)
+
+        public async Task<InformacoesDaAnalise> ProcessarAsync(string caminhoDoArquivo, int tamanhoDoBuffer = 1048576)
         {
-            var buscarTextoEmSiteComandos = new BuscarTextoEmSiteComandos(paginaWebParaBuscaDosTextos);
-            var buscarTextoEmSiteResposta = await _buscarTextoEmSite.ExecutarAsync(buscarTextoEmSiteComandos);
+            var buscarTextoEmSiteResposta = await _buscarTextoEmSite.ExecutarAsync(new BuscarTextoEmSiteComandos());
 
 
 

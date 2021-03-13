@@ -31,11 +31,11 @@ namespace AnalisadorDeBytes.Testes.Dominio
         {
             _buscarTextoEmSite = new BuscarTextoEmSite(_buscadorWeb.Object);
             _contadorDeBytes = new ContadorDeBytes(_contadorDeBytesWeb.Object);
-            _geradorDeArquivo = new GeradorDeArquivo();
-            _analisador = new Analisador(_buscarTextoEmSite, _contadorDeBytes, _geradorDeArquivo);
+            _geradorDeArquivo = new GeradorDeArquivo();           
+            _analisador = new Analisador();
             
 
-            _buscadorWeb.Setup(x => x.Buscar(new Uri(_siteWebParaBuscarTextos)))
+            _buscadorWeb.Setup(x => x.Buscar())
                 .ReturnsAsync(_textoMockado);
 
             _contadorDeBytesWeb.Setup(x => x.ContarBytesPorTextoAsync(_textoMockado))
@@ -49,7 +49,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
         [Fact]
         public async void ProcessarAsync_DeveriaGerarMetricas()
         {            
-            var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
+            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
 
             Assert.NotNull(infos);
             Assert.NotNull(infos.CaminhoFisico);
@@ -67,7 +67,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
         [Fact]
         public async void AnalyseAsync_DeveriaGerarMetricasComTamanhoDoBufferDiferente()
         {
-            var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
+            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
 
             Assert.NotNull(infos);
             Assert.NotNull(infos.CaminhoFisico);
@@ -85,7 +85,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
         [Fact]
         public async Task AnalyseAsync_DeveriaGerarMetricasFallbackBuscaAsync()
         {
-            var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
+            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
 
             Assert.NotNull(infos);
             Assert.NotNull(infos.CaminhoFisico);
@@ -103,7 +103,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
         [Fact]
         public async Task AnalyseAsync_DeveriaGerarMetricasFallbackContadorDeBytesAsync()
         {
-            var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
+            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
 
             Assert.NotNull(infos);
             Assert.NotNull(infos.CaminhoFisico);
@@ -121,7 +121,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
         [Fact]
         public async Task AnalyseAsync_NaoDeveriaGerarMetricasSemCaminhoArquivoAsync()
         {
-            var infos = await _analisador.ProcessarAsync(new Uri(_siteWebParaBuscarTextos), _caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
+            var infos = await _analisador.ProcessarAsync(_caminhoFisicoArquivo, _tamanhoMaximoBufferEmBytes);
 
             Assert.NotNull(infos);
             Assert.NotNull(infos.CaminhoFisico);

@@ -15,13 +15,15 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 
         public BuscarTextoEmSite(IBuscadorDeTextoWeb buscadorWeb)
         {
-            _buscadorWeb = buscadorWeb;            
+            _buscadorWeb = buscadorWeb;
         }
 
         public async Task<BuscarTextoEmSiteResposta> ExecutarAsync(BuscarTextoEmSiteComandos comando)
         {
-            var textoRetornado = await _buscadorWeb.Buscar(comando.UrlDoWebASerBuscada);
+         
+            var textoRetornado = await _buscadorWeb.Buscar();
 
+            
             return new BuscarTextoEmSiteResposta(textoRetornado);
         }
     }

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using AnalisadorDeBytes.IoC;
+using System;
 
-namespace AnalisadorDeBytes.Dominio.Respostas
+namespace AnalisadorDeBytes.Dominio.Modelo
 {
-    public class Metricas
+    public class Metricas : IModel
     {
         public Metricas(int numeroDeIteracoes, TimeSpan tempoTotalgeracaoArquivo, TimeSpan tempoMedioEscritaArquivo)
         {
