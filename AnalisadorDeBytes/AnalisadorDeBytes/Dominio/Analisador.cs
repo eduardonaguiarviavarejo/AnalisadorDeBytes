@@ -4,6 +4,7 @@ using AnalisadorDeBytes.Core.Componentes.GeradorDeLog;
 using AnalisadorDeBytes.Core.Componentes.Log;
 using AnalisadorDeBytes.Dominio.Comandos;
 using AnalisadorDeBytes.Dominio.Estrategia;
+using AnalisadorDeBytes.Dominio.Estrategia.ContadorDeBytesFallback;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
 using System.Threading.Tasks;
@@ -29,6 +30,7 @@ namespace AnalisadorDeBytes.Dominio
             _buscadorDeTextoWebFallback = new GeradorDeTextoAleatorioFallback();
             _buscadorDeTextoWeb = new BuscadorDeTextoWeb(_buscadorDeTextoWebFallback, _geradorDeLog);
             _buscarTextoEmSite = new BuscarTextoEmSite(_buscadorDeTextoWeb);
+            _contadorDeBytesWebFallback = new ContadorDeBytesFallback();
             _contadorDeBytesWeb = new ContadorDeBytesWeb(_contadorDeBytesWebFallback, _geradorDeLog);
             _contadorDeBytes = new ContadorDeBytes(_contadorDeBytesWeb);
             _geradorDeArquivo = new GeradorDeArquivo();
