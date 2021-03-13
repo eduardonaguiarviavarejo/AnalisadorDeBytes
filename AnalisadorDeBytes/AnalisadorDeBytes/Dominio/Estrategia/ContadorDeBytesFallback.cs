@@ -1,4 +1,5 @@
 ﻿using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
+using System.Text;
 
 namespace AnalisadorDeBytes.Dominio.Estrategia.ContadorDeBytesFallback
 {
@@ -6,7 +7,7 @@ namespace AnalisadorDeBytes.Dominio.Estrategia.ContadorDeBytesFallback
     {
         public int ContarBytesDoTexto(string texto)
         {
-            throw new System.NotImplementedException();
+            return ASCIIEncoding.Unicode.GetByteCount(texto);
         }
     }
 }

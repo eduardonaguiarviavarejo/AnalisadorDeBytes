@@ -5,7 +5,10 @@ namespace AnalisadorDeBytes.Dominio.Modelo
 {
     public class Metricas : IModel
     {
-        public Metricas(int numeroDeIteracoes, TimeSpan tempoTotalgeracaoArquivo, TimeSpan tempoMedioEscritaArquivo)
+        public Metricas(
+            int numeroDeIteracoes, 
+            TimeSpan tempoTotalgeracaoArquivo, 
+            TimeSpan tempoMedioEscritaArquivo)
         {
             NumeroDeIteracoes = numeroDeIteracoes;
             TempoTotalgeracaoArquivo = tempoTotalgeracaoArquivo;

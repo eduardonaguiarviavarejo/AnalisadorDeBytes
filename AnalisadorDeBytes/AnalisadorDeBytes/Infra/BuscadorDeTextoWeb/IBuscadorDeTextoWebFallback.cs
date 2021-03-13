@@ -1,7 +1,9 @@
-﻿namespace AnalisadorDeBytes.Core.BuscadorWeb
+﻿using System.Threading.Tasks;
+
+namespace AnalisadorDeBytes.Core.BuscadorWeb
 {
     public interface IBuscadorDeTextoWebFallback
     {
-        string BuscarTextoAleatorio();
+        Task<string> BuscarTextoAleatorio();
     }
 }

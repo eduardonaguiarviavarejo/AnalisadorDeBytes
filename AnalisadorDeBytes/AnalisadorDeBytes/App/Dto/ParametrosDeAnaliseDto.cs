@@ -11,6 +11,7 @@ namespace AnalisadorDeBytes.App
         [Required(ErrorMessage = "Parâmetro requerido.")]
         public string CaminhoDoArquivo { get; set; }
 
+        
         [Required(ErrorMessage = "Parâmetro requerido.")]        
         public int TamanhoDoBufferEmBytes { get; set; }
     }

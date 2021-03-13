@@ -6,15 +6,16 @@ using AnalisadorDeBytes.Dominio.Comandos;
 using AnalisadorDeBytes.Dominio.Estrategia;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
-using System;
 using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes.Dominio
 {
     public class Analisador : IAnalisador
     {
-        private IBuscadorDeTextoWeb _buscadorDeTextoWeb; 
-        private IBuscarTextoEmSite _buscarTextoEmSite; 
+        private const int TAMANHODOBUFFER = 1048576;
+
+        private IBuscadorDeTextoWeb _buscadorDeTextoWeb;
+        private IBuscarTextoEmSite _buscarTextoEmSite;
         private IContadorDeBytes _contadorDeBytes;
         private IGeradorDeArquivo _geradorDeArquivo;
         private IContadorDeBytesWeb _contadorDeBytesWeb;
@@ -33,40 +34,28 @@ namespace AnalisadorDeBytes.Dominio
             _geradorDeArquivo = new GeradorDeArquivo();
         }
 
-
-
-
-
-        public async Task<InformacoesDaAnalise> ProcessarAsync(string caminhoDoArquivo, int tamanhoDoBuffer = 1048576)
+        public async Task<InformacoesDaAnalise> ProcessarAsync(string caminhoDoArquivo, int tamanhoDoBuffer = TAMANHODOBUFFER)
         {
             var buscarTextoEmSiteResposta = await _buscarTextoEmSite.ExecutarAsync(new BuscarTextoEmSiteComandos());
 
-
-
-
+            
             var contadorDeBytesComando = new ContadorDeBytesComando(buscarTextoEmSiteResposta.TextoRecuperadoDaWeb);
             var contadorDeBytesResposta = await _contadorDeBytes.ExecutarAsync(contadorDeBytesComando);
 
-
-
-
+            
             var geradorDeArquivoComando = new GeradorDeArquivoComando(
-                caminhoDoArquivo, 
-                tamanhoDoBuffer,                 
+                caminhoDoArquivo,
+                tamanhoDoBuffer,
                 buscarTextoEmSiteResposta.TextoRecuperadoDaWeb);
 
-            
-            
             
             var geradorDeArquivoResposta = await _geradorDeArquivo.ExecutarAsync(geradorDeArquivoComando);
 
             
-            
-            
             return new InformacoesDaAnalise(
-                geradorDeArquivoResposta.NomeDoArquivo, 
-                geradorDeArquivoResposta.TamanhoDoArquivo, 
-                geradorDeArquivoResposta.CaminhoFisico, 
+                geradorDeArquivoResposta.NomeDoArquivo,
+                geradorDeArquivoResposta.TamanhoDoArquivo,
+                geradorDeArquivoResposta.CaminhoFisico,
                 geradorDeArquivoResposta.Metricas);
         }
     }

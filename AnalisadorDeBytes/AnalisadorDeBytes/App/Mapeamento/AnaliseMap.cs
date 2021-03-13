@@ -21,6 +21,8 @@ namespace AnalisadorDeBytes.App.Mapeamento
             });
         }
 
+
+
         public Task<AnaliseDto> ModelToDtoAsync(InformacoesDaAnalise model)
         {
             return Task.Run(() =>

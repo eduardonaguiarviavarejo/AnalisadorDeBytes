@@ -16,6 +16,8 @@ namespace AnalisadorDeBytes.App.Dto
             Metricas = metricas;
         }
 
+
+
         public string NomeDoArquivo { get; private set; }
         public decimal TamanhoDoArquivo { get; private set; }
         public string CaminhoFisico { get; private set; }

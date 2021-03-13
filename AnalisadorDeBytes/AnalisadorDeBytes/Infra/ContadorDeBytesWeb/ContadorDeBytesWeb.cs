@@ -7,63 +7,51 @@ namespace AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb
 {
     public class ContadorDeBytesWeb : IContadorDeBytesWeb
     {
+        private const string SITEWEB = "https://mothereff.in/byte-counter";
         private readonly IContadorDeBytesWebFallback _contadorDeBytesWebFallback;
         private readonly IGeradorDeLog _geradorDeLog;
 
-
-
         public ContadorDeBytesWeb(
-            IContadorDeBytesWebFallback contadorDeBytesWebFallback, 
+            IContadorDeBytesWebFallback contadorDeBytesWebFallback,
             IGeradorDeLog geradorDeLog)
         {
             _contadorDeBytesWebFallback = contadorDeBytesWebFallback;
             _geradorDeLog = geradorDeLog;
         }
 
-
-
-
         public async Task<int> ContarBytesPorTextoAsync(string texto)
         {
+
+            Browser _browser;
+
+            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+
+            _browser = await Puppeteer.LaunchAsync(new LaunchOptions
+            {
+                Headless = true
+
+            });
+
             try
             {
-                Browser _browser;
-
-
-                await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
-
-
-                _browser = Puppeteer.LaunchAsync(new LaunchOptions
-                {
-                    Headless = true
-
-                }).Result;
-
-                
                 using (var paginaBuscada = await _browser.NewPageAsync())
                 {
-                    await paginaBuscada.GoToAsync($"https://mothereff.in/byte-counter#{texto}");
-
+                    await paginaBuscada.GoToAsync($"{SITEWEB}#{texto}");
 
                     await _geradorDeLog.GerarLogAsync($"Iniciando contagem de bytes.");
 
-
                     string valorEmBytesCalculado = await paginaBuscada.EvaluateExpressionAsync<string>("document.getElementById('bytes').textContent");
-
-
 
                     return int.Parse(valorEmBytesCalculado.Replace("bytes", ""));
                 }
 
             }
-            catch(ApplicationException ex)
+            catch (ApplicationException ex)
             {
 
                 await _geradorDeLog.GerarLogAsync($"Erro: {ex.Message}");
 
-
                 await _geradorDeLog.GerarLogAsync($"Executando estratégia de fallback.");
-
 
                 return _contadorDeBytesWebFallback.ContarBytesDoTexto(texto);
             }

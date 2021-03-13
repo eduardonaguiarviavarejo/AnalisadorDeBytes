@@ -12,6 +12,8 @@ namespace AnalisadorDeBytes.App.Dto
             TempoMedioEscritaArquivo = tempoMedioEscritaArquivo;
         }
 
+
+
         public int NumeroDeIteracoes { get; private set; }
         public TimeSpan TempoTotalGeracaoArquivo { get; private set; }
         public TimeSpan TempoMedioEscritaArquivo { get; private set; }

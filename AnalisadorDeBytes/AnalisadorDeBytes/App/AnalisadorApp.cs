@@ -4,7 +4,6 @@ using AnalisadorDeBytes.Core.Componentes.Log;
 using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
 using ConsoleTableExt;
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -16,41 +15,28 @@ namespace AnalisadorDeBytes.App
         private readonly IAnalisador _analisador;
         private readonly IGeradorDeLog _geradorDeLog;
 
-
-
-
         public AnalisadorApp(
-            IAnalisador analisador, 
+            IAnalisador analisador,
             IGeradorDeLog geradorDeLog)
         {
             _analisador = analisador;
             _geradorDeLog = geradorDeLog;
         }
 
-
-
-
         public async Task AnalisarAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
-        {            
+        {
             var retornoDaAnalise = await AnalisarParametrosAsync(parametrosDeAnaliseDto);
-            
-                        
+
             await ImprimirRelatorioAsync(retornoDaAnalise, parametrosDeAnaliseDto.TiposDeRelatorio);
         }
-
-
-
 
         private async Task<AnaliseDto> AnalisarParametrosAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
         {
             return await new AnaliseMap().ModelToDtoAsync(await _analisador.ProcessarAsync(parametrosDeAnaliseDto.CaminhoDoArquivo, parametrosDeAnaliseDto.TamanhoDoBufferEmBytes));
         }
 
-
-
-
         private async Task ImprimirRelatorioAsync(AnaliseDto analiseDto, TiposDeRelatorio tiposDeRelatorio)
-        {                        
+        {
             if (tiposDeRelatorio == TiposDeRelatorio.Tabela)
             {
                 ImprimirTabelaAsync(analiseDto);
@@ -58,26 +44,20 @@ namespace AnalisadorDeBytes.App
             else
             {
                 await ImprimirJsonAsync(analiseDto);
-            }            
+            }
         }
-
-
 
         private void ImprimirTabelaAsync(AnaliseDto analiseDto)
         {
-            List<AnaliseDto> listaBaseTabela = new List<AnaliseDto>()
-            {
+            List<AnaliseDto> listaBaseTabela = new List<AnaliseDto>() {
                 analiseDto
             };
 
             ConsoleTableBuilder
-            .From(listaBaseTabela)
-            .WithFormat(ConsoleTableBuilderFormat.Alternative)
-            .ExportAndWriteLine(TableAligntment.Center);
+                .From(listaBaseTabela)
+                .WithFormat(ConsoleTableBuilderFormat.Alternative)
+                .ExportAndWriteLine(TableAligntment.Center);
         }
-
-
-
 
         private async Task ImprimirJsonAsync(AnaliseDto analiseDto)
         {

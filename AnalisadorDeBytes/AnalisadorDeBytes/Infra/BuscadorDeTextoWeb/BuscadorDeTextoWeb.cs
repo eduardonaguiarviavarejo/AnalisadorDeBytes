@@ -12,9 +12,8 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
         private readonly IBuscadorDeTextoWebFallback _buscadorDeTextoWebFallback;
         private readonly IGeradorDeLog _geradorDeLog;
 
-
         public BuscadorDeTextoWeb(
-            IBuscadorDeTextoWebFallback buscadorDeTextoWebFallback, 
+            IBuscadorDeTextoWebFallback buscadorDeTextoWebFallback,
             IGeradorDeLog geradorDeLog)
         {
             _buscadorDeTextoWebFallback = buscadorDeTextoWebFallback;
@@ -23,48 +22,38 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
 
         public async Task<string> Buscar()
         {
+
+            Browser _browse;
+
+            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+
+            _browse = await Puppeteer.LaunchAsync(new LaunchOptions
+            {
+                Headless = true
+            });
+
             try
             {
-                Browser _browse;
-
-
-                await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
-
-
-                _browse = await Puppeteer.LaunchAsync(new LaunchOptions
-                {
-                    Headless = true
-
-                });
-
-
-
 
                 using (var page = await _browse.NewPageAsync())
                 {
-
                     await page.GoToAsync(SITEWEB);
 
-                                        
                     await _geradorDeLog.GerarLogAsync($"Iniciando crawler para buscar texto.");
 
-                                        
                     string textoExtraido = await page.QuerySelectorAsync(".sentence").EvaluateFunctionAsync<string>("_ => _.innerText");
-
 
                     return textoExtraido;
                 }
 
-            }            
-            catch(ApplicationException ex)
+            }
+            catch (ApplicationException ex)
             {
-                await _geradorDeLog.GerarLogAsync($"Erro: {ex.Message}" );
-
+                await _geradorDeLog.GerarLogAsync($"Erro: {ex.Message}");
 
                 await _geradorDeLog.GerarLogAsync($"Executando estratégia de fallback.");
 
-
-                return _buscadorDeTextoWebFallback.BuscarTextoAleatorio();
+                return await _buscadorDeTextoWebFallback.BuscarTextoAleatorio();
             }
         }
     }
