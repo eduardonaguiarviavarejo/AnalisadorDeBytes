@@ -1,15 +1,15 @@
 ﻿using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
 
-namespace AnalisadorDeBytes.Dominio.Respostas
+namespace AnalisadorDeBytes.Dominio
 {
-    public class GeradorDeArquivoResposta : IResposta
+    public class InformacoesDaAnalise : IModel
     {
-        public GeradorDeArquivoResposta(
-        string nomeDoArquivo,
-        decimal tamanhoDoArquivo,
-        string caminhoFisico,
-        Metricas metricas)
+        public InformacoesDaAnalise(
+            string nomeDoArquivo,
+            decimal tamanhoDoArquivo,
+            string caminhoFisico,
+            Metricas metricas)
         {
             NomeDoArquivo = nomeDoArquivo;
             TamanhoDoArquivo = tamanhoDoArquivo;

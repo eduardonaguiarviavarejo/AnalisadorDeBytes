@@ -10,8 +10,6 @@ namespace AnalisadorDeBytes.Testes.Dominio
 {
     public class BuscarTextoEmSiteTeste
     {
-        private readonly string _siteParaBuscarTextos = "http://lerolero.com.br";
-        private readonly string _siteParaBuscarTextosFake = "http://lerolero22.com.br";
         private readonly string _textoMockado = "O fluxo deve se repetir até que o arquivo tenha o tamanho de 100MB como tamanho padrão";
         private readonly IBuscarTextoEmSite _buscarTextoEmSite;
         private readonly Mock<IBuscadorDeTextoWeb> _buscadorWeb = new Mock<IBuscadorDeTextoWeb>();
@@ -24,12 +22,12 @@ namespace AnalisadorDeBytes.Testes.Dominio
 
         public async void ExecutarAsync_DeveriaBuscarTextosNoSite()
         {
-            _buscadorWeb.Setup(x => x.Buscar(new Uri(_siteParaBuscarTextos)))
+            _buscadorWeb.Setup(x => x.Buscar())
                 .ReturnsAsync(_textoMockado);
 
 
             var resposta = await _buscarTextoEmSite
-                .ExecutarAsync(new BuscarTextoEmSiteComandos(new Uri(_siteParaBuscarTextos)));
+                .ExecutarAsync(new BuscarTextoEmSiteComandos());
 
                                    
             Assert.NotNull(resposta.TextoRecuperadoDaWeb);
@@ -38,7 +36,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
 
         public async void ExecutarAsync_NaoDeveriaBuscarTextosNoSiteSiteInexistente()
         {
-            var resposta = await _buscarTextoEmSite.ExecutarAsync(new BuscarTextoEmSiteComandos(new Uri(_siteParaBuscarTextosFake)));
+            var resposta = await _buscarTextoEmSite.ExecutarAsync(new BuscarTextoEmSiteComandos());
 
 
             Assert.NotNull(resposta.TextoRecuperadoDaWeb);

@@ -14,6 +14,9 @@ namespace AnalisadorDeBytes.Dominio.Comandos
             TextoAnalisado = textoAnalisado;
         }
 
+
+
+
         public string CaminhoDoArquivo { get; private set; }
         public int TamanhoDoBuffer { get; private set; }         
         public string TextoAnalisado { get; private set; }
