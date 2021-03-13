@@ -46,7 +46,7 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
                     await page.GoToAsync(SITEWEB);
 
                                         
-                    await _geradorDeLog.GerarLog($"Iniciando crawler para buscar texto.");
+                    await _geradorDeLog.GerarLogAsync($"Iniciando crawler para buscar texto.");
 
                                         
                     string textoExtraido = await page.QuerySelectorAsync(".sentence").EvaluateFunctionAsync<string>("_ => _.innerText");
@@ -58,10 +58,10 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
             }            
             catch(ApplicationException ex)
             {
-                await _geradorDeLog.GerarLog($"Erro: {ex.Message}" );
+                await _geradorDeLog.GerarLogAsync($"Erro: {ex.Message}" );
 
 
-                await _geradorDeLog.GerarLog($"Executando estratégia de fallback.");
+                await _geradorDeLog.GerarLogAsync($"Executando estratégia de fallback.");
 
 
                 return _buscadorDeTextoWebFallback.BuscarTextoAleatorio();

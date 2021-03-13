@@ -1,8 +1,12 @@
 ﻿using AnalisadorDeBytes.App.Dto;
 using AnalisadorDeBytes.App.Mapeamento;
+using AnalisadorDeBytes.Core.Componentes.Log;
 using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
+using ConsoleTableExt;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes.App
@@ -10,32 +14,34 @@ namespace AnalisadorDeBytes.App
     public class AnalisadorApp : IAnalisadorApp
     {
         private readonly IAnalisador _analisador;
+        private readonly IGeradorDeLog _geradorDeLog;
 
 
 
 
-        public AnalisadorApp(IAnalisador analisador)
+        public AnalisadorApp(
+            IAnalisador analisador, 
+            IGeradorDeLog geradorDeLog)
         {
             _analisador = analisador;
+            _geradorDeLog = geradorDeLog;
         }
 
 
 
 
         public async Task AnalisarAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
-        {
+        {            
+            var retornoDaAnalise = await AnalisarParametrosAsync(parametrosDeAnaliseDto);
             
-            var retornoDaAnalise = await Analisar(parametrosDeAnaliseDto);
-            
-            
-            
-            await ImprimirRelatorio(retornoDaAnalise, parametrosDeAnaliseDto.TiposDeRelatorio);
+                        
+            await ImprimirRelatorioAsync(retornoDaAnalise, parametrosDeAnaliseDto.TiposDeRelatorio);
         }
 
 
 
 
-        private async Task<AnaliseDto> Analisar(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
+        private async Task<AnaliseDto> AnalisarParametrosAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
         {
             return await new AnaliseMap().ModelToDtoAsync(await _analisador.ProcessarAsync(parametrosDeAnaliseDto.CaminhoDoArquivo, parametrosDeAnaliseDto.TamanhoDoBufferEmBytes));
         }
@@ -43,35 +49,39 @@ namespace AnalisadorDeBytes.App
 
 
 
-        private Task ImprimirRelatorio(AnaliseDto analiseDto, TiposDeRelatorio tiposDeRelatorio)
-        {
-            return Task.Run(async () =>
+        private async Task ImprimirRelatorioAsync(AnaliseDto analiseDto, TiposDeRelatorio tiposDeRelatorio)
+        {                        
+            if (tiposDeRelatorio == TiposDeRelatorio.Tabela)
             {
-                if (tiposDeRelatorio == TiposDeRelatorio.Tabela)
-                {
-                    await ImprimirTabela(analiseDto);
-                }
-                else
-                {
-                    await ImprimirJson(analiseDto);
-                }
-            });
+                ImprimirTabelaAsync(analiseDto);
+            }
+            else
+            {
+                await ImprimirJsonAsync(analiseDto);
+            }            
+        }
+
+
+
+        private void ImprimirTabelaAsync(AnaliseDto analiseDto)
+        {
+            List<AnaliseDto> listaBaseTabela = new List<AnaliseDto>()
+            {
+                analiseDto
+            };
+
+            ConsoleTableBuilder
+            .From(listaBaseTabela)
+            .WithFormat(ConsoleTableBuilderFormat.Alternative)
+            .ExportAndWriteLine(TableAligntment.Center);
         }
 
 
 
 
-        private Task ImprimirTabela(AnaliseDto analiseDto)
+        private async Task ImprimirJsonAsync(AnaliseDto analiseDto)
         {
-            throw new NotImplementedException();
-        }
-
-
-
-
-        private Task ImprimirJson(AnaliseDto analiseDto)
-        {
-            throw new NotImplementedException();
+            await _geradorDeLog.GerarLogAsync(JsonSerializer.Serialize(analiseDto));
         }
     }
 }

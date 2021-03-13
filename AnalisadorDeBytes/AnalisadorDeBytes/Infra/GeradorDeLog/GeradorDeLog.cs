@@ -6,7 +6,7 @@ namespace AnalisadorDeBytes.Core.Componentes.GeradorDeLog
 {
     public class GeradorDeLog : IGeradorDeLog
     {
-        public Task GerarLog(string mensagem)
+        public Task GerarLogAsync(string mensagem)
         {
             return Task.Run(() => Console.WriteLine(mensagem));
         }

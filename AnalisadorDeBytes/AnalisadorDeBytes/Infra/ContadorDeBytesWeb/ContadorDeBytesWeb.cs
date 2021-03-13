@@ -45,7 +45,7 @@ namespace AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb
                     await paginaBuscada.GoToAsync($"https://mothereff.in/byte-counter#{texto}");
 
 
-                    await _geradorDeLog.GerarLog($"Iniciando contagem de bytes.");
+                    await _geradorDeLog.GerarLogAsync($"Iniciando contagem de bytes.");
 
 
                     string valorEmBytesCalculado = await paginaBuscada.EvaluateExpressionAsync<string>("document.getElementById('bytes').textContent");
@@ -59,14 +59,13 @@ namespace AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb
             catch(ApplicationException ex)
             {
 
-                await _geradorDeLog.GerarLog($"Erro: {ex.Message}");
+                await _geradorDeLog.GerarLogAsync($"Erro: {ex.Message}");
 
 
-                await _geradorDeLog.GerarLog($"Executando estratégia de fallback.");
+                await _geradorDeLog.GerarLogAsync($"Executando estratégia de fallback.");
 
 
                 return _contadorDeBytesWebFallback.ContarBytesDoTexto(texto);
-
             }
         }
     }
