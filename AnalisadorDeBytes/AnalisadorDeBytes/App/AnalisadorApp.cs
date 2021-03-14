@@ -1,12 +1,13 @@
 ﻿using AnalisadorDeBytes.App.Dto;
-using AnalisadorDeBytes.App.Mapeamento;
+using AnalisadorDeBytes.App.Extensao;
 using AnalisadorDeBytes.Core.Componentes.GeradorDeLog;
 using AnalisadorDeBytes.Core.Componentes.Log;
-using AnalisadorDeBytes.Dominio;
 using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
 using ConsoleTableExt;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -27,12 +28,24 @@ namespace AnalisadorDeBytes.App
         {
             var retornoDaAnalise = await AnalisarParametrosAsync(parametrosDeAnaliseDto);
 
+
             await ImprimirRelatorioAsync(retornoDaAnalise, parametrosDeAnaliseDto.TiposDeRelatorio);
         }
 
         private async Task<AnaliseDto> AnalisarParametrosAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
         {
-            return await new AnaliseMap().ModelToDtoAsync(await _analisador.ProcessarAsync(parametrosDeAnaliseDto.CaminhoDoArquivo, parametrosDeAnaliseDto.TamanhoDoBufferEmBytes));
+            Stopwatch diagnostico = new Stopwatch();
+            diagnostico.Start();
+            var retorno = await _analisador.ProcessarAsync(parametrosDeAnaliseDto.CaminhoDoArquivo, parametrosDeAnaliseDto.TamanhoDoBufferEmBytes);
+            diagnostico.Stop();
+
+            return new AnaliseDto(
+                retorno.NomeDoArquivo,
+                retorno.TamanhoDoArquivo.ToMegaBytesString(),
+                retorno.CaminhoFisico,
+                retorno.NumeroDeIteracoes,
+                diagnostico.Elapsed.ToTimeFormat(),
+                diagnostico.Elapsed.Divide(retorno.NumeroDeIteracoes).ToTimeFormat());
         }
 
         private async Task ImprimirRelatorioAsync(AnaliseDto analiseDto, TiposDeRelatorio tiposDeRelatorio)
@@ -56,7 +69,19 @@ namespace AnalisadorDeBytes.App
             ConsoleTableBuilder
                 .From(listaBaseTabela)
                 .WithFormat(ConsoleTableBuilderFormat.Alternative)
-                .ExportAndWriteLine(TableAligntment.Center);
+                .WithColumn(
+                "Nome Arquivo", 
+                "Tamanho Arquivo", 
+                "Caminho Físico", 
+                "Número Iterações", 
+                "Tempo Total Geração Arquivo", 
+                "Tempo Médio Geração Arquivo")
+                .WithTextAlignment(new Dictionary<int, TextAligntment>() {
+                    {3, TextAligntment.Right},
+                    {4, TextAligntment.Right},
+                    {5, TextAligntment.Right}
+                })
+                .ExportAndWriteLine(TableAligntment.Left);
         }
 
         private async Task ImprimirJsonAsync(AnaliseDto analiseDto)

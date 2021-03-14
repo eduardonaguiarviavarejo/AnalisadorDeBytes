@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes.Dominio.Servico
 {
-    public class ContarBytes : IContadorDeBytesWeb
+    public class ContarBytesServico : IContadorDeBytesWeb
     {
         private const string SITEWEB = "https://mothereff.in/byte-counter";
         private readonly IContadorDeBytesWebFallback _contadorDeBytesWebFallback;
         private readonly IGeradorDeLog _geradorDeLog;
 
-        public ContarBytes(
+        public ContarBytesServico(
             IContadorDeBytesWebFallback contadorDeBytesWebFallback,
             IGeradorDeLog geradorDeLog)
         {

@@ -3,7 +3,6 @@ using AnalisadorDeBytes.Dominio.Comandos;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
 using Moq;
-using System;
 using Xunit;
 
 namespace AnalisadorDeBytes.Testes.Dominio

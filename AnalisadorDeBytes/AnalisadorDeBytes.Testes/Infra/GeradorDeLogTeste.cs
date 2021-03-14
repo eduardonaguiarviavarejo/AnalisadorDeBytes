@@ -1,6 +1,6 @@
 ﻿namespace AnalisadorDeBytes.Testes.Infra
 {
-    class ContadorDeBytesWebTeste
+    public class GeradorDeLogTeste
     {
     }
 }

@@ -31,7 +31,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
         }
 
         [Fact]
-        public void ExecutarAsync_NaoDeveContarBytes()
+        public void ExecutarAsync_NaoDeveContarBytesTextoEntradaVazio()
         {
             var resposta = _contadorDeBytes.ExecutarAsync(new ContadorDeBytesComando(string.Empty));
         }

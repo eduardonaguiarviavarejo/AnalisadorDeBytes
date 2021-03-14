@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Dominio\Validacao\" />
     <Folder Include="Infra\Crawler\" />
   </ItemGroup>
 

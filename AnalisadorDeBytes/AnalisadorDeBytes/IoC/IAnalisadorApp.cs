@@ -1,6 +1,10 @@
-﻿namespace AnalisadorDeBytes.IoC
+﻿using AnalisadorDeBytes.App;
+using System.Threading.Tasks;
+
+namespace AnalisadorDeBytes.IoC
 {
-    interface IAnalisadorApp
+    public interface IAnalisadorApp
     {
+        Task AnalisarAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto);
     }
 }

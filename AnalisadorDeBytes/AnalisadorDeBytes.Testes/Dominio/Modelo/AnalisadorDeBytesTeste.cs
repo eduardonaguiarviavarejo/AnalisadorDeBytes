@@ -11,7 +11,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
 {
     public class AnalisadorDeBytesTeste
     {
-        private readonly string _caminhoFisicoArquivo = @ "c:/dev";
+        private readonly string _caminhoFisicoArquivo = @"c:\dev";
         private readonly int _tamanhoMaximoBufferEmBytes = 1024000;
         private readonly string _textoMockado = "O fluxo deve se repetir até que o arquivo tenha o tamanho de 100MB como tamanho padrão";
         private readonly int _quantidadeBytesRetornada = 1024000;
@@ -46,10 +46,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
             Assert.NotNull(infos.CaminhoFisico);
             Assert.NotNull(infos.NomeDoArquivo);
             Assert.True(infos.TamanhoDoArquivo > 0);
-            Assert.NotNull(infos.Metricas);
-            Assert.True(infos.Metricas.NumeroDeIteracoes > 0);
-            Assert.True(infos.Metricas.TempoMedioEscritaArquivo.TotalMilliseconds > 0);
-            Assert.True(infos.Metricas.TempoTotalgeracaoArquivo.TotalMilliseconds > 0);
+            Assert.True(infos.NumeroDeIteracoes > 0);
         }
 
         [Fact]
@@ -61,10 +58,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
             Assert.NotNull(infos.CaminhoFisico);
             Assert.NotNull(infos.NomeDoArquivo);
             Assert.True(infos.TamanhoDoArquivo > 0);
-            Assert.NotNull(infos.Metricas);
-            Assert.True(infos.Metricas.NumeroDeIteracoes > 0);
-            Assert.True(infos.Metricas.TempoMedioEscritaArquivo.TotalMilliseconds > 0);
-            Assert.True(infos.Metricas.TempoTotalgeracaoArquivo.TotalMilliseconds > 0);
+            Assert.True(infos.NumeroDeIteracoes > 0);
         }
 
         [Fact]
@@ -76,10 +70,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
             Assert.NotNull(infos.CaminhoFisico);
             Assert.NotNull(infos.NomeDoArquivo);
             Assert.True(infos.TamanhoDoArquivo > 0);
-            Assert.NotNull(infos.Metricas);
-            Assert.True(infos.Metricas.NumeroDeIteracoes > 0);
-            Assert.True(infos.Metricas.TempoMedioEscritaArquivo.TotalMilliseconds > 0);
-            Assert.True(infos.Metricas.TempoTotalgeracaoArquivo.TotalMilliseconds > 0);
+            Assert.True(infos.NumeroDeIteracoes > 0);
         }
 
         [Fact]
@@ -91,10 +82,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
             Assert.NotNull(infos.CaminhoFisico);
             Assert.NotNull(infos.NomeDoArquivo);
             Assert.True(infos.TamanhoDoArquivo > 0);
-            Assert.NotNull(infos.Metricas);
-            Assert.True(infos.Metricas.NumeroDeIteracoes > 0);
-            Assert.True(infos.Metricas.TempoMedioEscritaArquivo.TotalMilliseconds > 0);
-            Assert.True(infos.Metricas.TempoTotalgeracaoArquivo.TotalMilliseconds > 0);
+            Assert.True(infos.NumeroDeIteracoes > 0);
         }
 
         [Fact]
@@ -106,10 +94,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
             Assert.NotNull(infos.CaminhoFisico);
             Assert.NotNull(infos.NomeDoArquivo);
             Assert.True(infos.TamanhoDoArquivo > 0);
-            Assert.NotNull(infos.Metricas);
-            Assert.True(infos.Metricas.NumeroDeIteracoes > 0);
-            Assert.True(infos.Metricas.TempoMedioEscritaArquivo.TotalMilliseconds > 0);
-            Assert.True(infos.Metricas.TempoTotalgeracaoArquivo.TotalMilliseconds > 0);
+            Assert.True(infos.NumeroDeIteracoes > 0);
         }
     }
 }

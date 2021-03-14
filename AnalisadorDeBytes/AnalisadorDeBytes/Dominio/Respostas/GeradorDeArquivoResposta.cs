@@ -8,18 +8,18 @@ namespace AnalisadorDeBytes.Dominio.Respostas
         public GeradorDeArquivoResposta(
         string nomeDoArquivo,
         decimal tamanhoDoArquivo,
-        string caminhoFisico,
-        Metricas metricas)
+        string caminhoFisico, 
+        int numeroDeIteracoes)
         {
             NomeDoArquivo = nomeDoArquivo;
             TamanhoDoArquivo = tamanhoDoArquivo;
             CaminhoFisico = caminhoFisico;
-            Metricas = metricas;
+            NumeroDeIteracoes = numeroDeIteracoes;
         }
 
         public string NomeDoArquivo { get; private set; }
         public decimal TamanhoDoArquivo { get; private set; }
         public string CaminhoFisico { get; private set; }
-        public Metricas Metricas { get; private set; }
+        public int NumeroDeIteracoes { get; private set; }
     }
 }

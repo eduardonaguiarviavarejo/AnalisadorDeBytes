@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes.Dominio.Servico
 {
-    public class BuscarTexto : IBuscadorDeTextoWeb
+    public class BuscarTextoServico : IBuscadorDeTextoWeb
     {
 
         private const string SITEWEB = "http://lerolero.com";
         private readonly IBuscadorDeTextoWebFallback _buscadorDeTextoWebFallback;
         private readonly IGeradorDeLog _geradorDeLog;
 
-        public BuscarTexto(
+        public BuscarTextoServico(
             IBuscadorDeTextoWebFallback buscadorDeTextoWebFallback,
             IGeradorDeLog geradorDeLog)
         {
