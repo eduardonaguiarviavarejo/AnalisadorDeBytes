@@ -17,7 +17,9 @@ namespace AnalisadorDeBytes.App.Mapeamento
                     dto.TamanhoDoArquivo,
                     dto.CaminhoFisico,
                     new Metricas(
-                        dto.Metricas.NumeroDeIteracoes, dto.Metricas.TempoTotalGeracaoArquivo, dto.Metricas.TempoMedioEscritaArquivo));
+                        dto.NumeroDeIteracoes, 
+                        dto.TempoTotalGeracaoArquivo, 
+                        dto.TempoMedioEscritaArquivo));
             });
         }
 
@@ -30,11 +32,10 @@ namespace AnalisadorDeBytes.App.Mapeamento
                 return new AnaliseDto(
                  model.NomeDoArquivo,
                  model.TamanhoDoArquivo,
-                 model.CaminhoFisico,
-                 new MetricasDto(
-                     model.Metricas.NumeroDeIteracoes, 
-                     model.Metricas.TempoTotalgeracaoArquivo, 
-                     model.Metricas.TempoTotalgeracaoArquivo));
+                 model.CaminhoFisico,                 
+                 model.Metricas.NumeroDeIteracoes, 
+                 model.Metricas.TempoTotalgeracaoArquivo, 
+                 model.Metricas.TempoTotalgeracaoArquivo);
             });
         }
     }

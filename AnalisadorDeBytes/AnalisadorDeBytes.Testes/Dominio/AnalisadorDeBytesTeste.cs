@@ -2,6 +2,7 @@
 using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
 using AnalisadorDeBytes.Dominio;
 using AnalisadorDeBytes.Dominio.Manipuladores;
+using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
 using Moq;
 using System;

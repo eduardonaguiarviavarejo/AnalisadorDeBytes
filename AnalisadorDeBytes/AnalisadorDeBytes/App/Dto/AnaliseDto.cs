@@ -1,4 +1,5 @@
 ﻿using AnalisadorDeBytes.IoC;
+using System;
 
 namespace AnalisadorDeBytes.App.Dto
 {
@@ -8,12 +9,16 @@ namespace AnalisadorDeBytes.App.Dto
         string nomeDoArquivo,
         decimal tamanhoDoArquivo,
         string caminhoFisico,
-        MetricasDto metricas)
+        int numeroDeIteracoes, 
+        TimeSpan tempoTotalGeracaoArquivo, 
+        TimeSpan tempoMedioEscritaArquivo)
         {
             NomeDoArquivo = nomeDoArquivo;
             TamanhoDoArquivo = tamanhoDoArquivo;
             CaminhoFisico = caminhoFisico;
-            Metricas = metricas;
+            NumeroDeIteracoes = numeroDeIteracoes;
+            TempoTotalGeracaoArquivo = tempoTotalGeracaoArquivo;
+            TempoMedioEscritaArquivo = tempoMedioEscritaArquivo;
         }
 
 
@@ -21,6 +26,8 @@ namespace AnalisadorDeBytes.App.Dto
         public string NomeDoArquivo { get; private set; }
         public decimal TamanhoDoArquivo { get; private set; }
         public string CaminhoFisico { get; private set; }
-        public MetricasDto Metricas { get; private set; }
+        public int NumeroDeIteracoes { get; private set; }
+        public TimeSpan TempoTotalGeracaoArquivo { get; private set; }
+        public TimeSpan TempoMedioEscritaArquivo { get; private set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using AnalisadorDeBytes.App.Dto;
 using AnalisadorDeBytes.App.Mapeamento;
+using AnalisadorDeBytes.Core.Componentes.GeradorDeLog;
 using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.Dominio;
 using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
 using ConsoleTableExt;
@@ -15,12 +17,10 @@ namespace AnalisadorDeBytes.App
         private readonly IAnalisador _analisador;
         private readonly IGeradorDeLog _geradorDeLog;
 
-        public AnalisadorApp(
-            IAnalisador analisador,
-            IGeradorDeLog geradorDeLog)
+        public AnalisadorApp()
         {
-            _analisador = analisador;
-            _geradorDeLog = geradorDeLog;
+            _analisador = new Analisador();
+            _geradorDeLog = new GeradorDeLog();
         }
 
         public async Task AnalisarAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)

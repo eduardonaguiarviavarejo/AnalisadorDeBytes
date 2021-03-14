@@ -1,4 +1,5 @@
-﻿using AnalisadorDeBytes.Dominio;
+﻿using AnalisadorDeBytes.App;
+using AnalisadorDeBytes.Dominio.Modelo;
 using System;
 using System.Threading.Tasks;
 
@@ -8,7 +9,9 @@ namespace AnalisadorDeBytes
     {
         static async Task Main(string[] args)
         {
-            
+            await new AnalisadorApp().AnalisarAsync(new ParametrosDeAnaliseDto(TiposDeRelatorio.Tabela, "c:/dev", 10000));
+
+
             Console.ReadKey();
         }
     }

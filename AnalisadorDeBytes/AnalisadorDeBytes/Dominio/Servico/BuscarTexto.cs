@@ -1,18 +1,20 @@
-﻿using AnalisadorDeBytes.Core.Componentes.Log;
+﻿using AnalisadorDeBytes.Core.BuscadorWeb;
+using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.IoC;
 using PuppeteerSharp;
 using System;
 using System.Threading.Tasks;
 
-namespace AnalisadorDeBytes.Core.BuscadorWeb
+namespace AnalisadorDeBytes.Dominio.Servico
 {
-    public class BuscadorDeTextoWeb : IBuscadorDeTextoWeb
+    public class BuscarTexto : IBuscadorDeTextoWeb
     {
 
         private const string SITEWEB = "http://lerolero.com";
         private readonly IBuscadorDeTextoWebFallback _buscadorDeTextoWebFallback;
         private readonly IGeradorDeLog _geradorDeLog;
 
-        public BuscadorDeTextoWeb(
+        public BuscarTexto(
             IBuscadorDeTextoWebFallback buscadorDeTextoWebFallback,
             IGeradorDeLog geradorDeLog)
         {
@@ -32,10 +34,10 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
                 Headless = true
             });
 
-            try
-            {
 
-                using (var page = await _browse.NewPageAsync())
+            using (var page = await _browse.NewPageAsync())
+            {
+                try
                 {
                     await page.GoToAsync(SITEWEB);
 
@@ -45,15 +47,14 @@ namespace AnalisadorDeBytes.Core.BuscadorWeb
 
                     return textoExtraido;
                 }
+                catch (Exception ex)
+                {
+                    await _geradorDeLog.GerarLogAsync($"Erro: {ex.Message}");
 
-            }
-            catch (ApplicationException ex)
-            {
-                await _geradorDeLog.GerarLogAsync($"Erro: {ex.Message}");
+                    await _geradorDeLog.GerarLogAsync($"Executando estratégia de fallback.");
 
-                await _geradorDeLog.GerarLogAsync($"Executando estratégia de fallback.");
-
-                return await _buscadorDeTextoWebFallback.BuscarTextoAleatorio();
+                    return await _buscadorDeTextoWebFallback.BuscarTextoAleatorio();
+                }
             }
         }
     }

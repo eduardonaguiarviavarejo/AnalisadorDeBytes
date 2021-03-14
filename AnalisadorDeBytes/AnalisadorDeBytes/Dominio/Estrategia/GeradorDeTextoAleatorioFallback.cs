@@ -1,6 +1,9 @@
 ﻿using AnalisadorDeBytes.Core.BuscadorWeb;
+using AnalisadorDeBytes.IoC;
 using System;
+using System.Globalization;
 using System.Resources;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes.Dominio.Estrategia
@@ -11,13 +14,18 @@ namespace AnalisadorDeBytes.Dominio.Estrategia
         {
             return Task.Run(() =>
             {
-                ResourceManager recurso = new ResourceManager(@".\TextosAleatorios.resources", typeof(GeradorDeTextoAleatorioFallback).Assembly);
-
-
+                               
                 var rand = new Random();
 
+               
+                var textoAleatorio = AnalisadorDeBytes.Properties.Resources.ResourceManager.GetString(rand.Next(1, 5).ToString());
 
-                return recurso.GetString(rand.Next(1, 5).ToString());
+
+                //ResourceSet resourceSet = AnalisadorDeBytes.Properties.Resources.ResourceManager.GetResourceSet(CultureInfo.CurrentUICulture, true, true);
+                
+
+                return textoAleatorio;
+
             });
         }
     }

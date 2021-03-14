@@ -6,10 +6,12 @@ using AnalisadorDeBytes.Dominio.Comandos;
 using AnalisadorDeBytes.Dominio.Estrategia;
 using AnalisadorDeBytes.Dominio.Estrategia.ContadorDeBytesFallback;
 using AnalisadorDeBytes.Dominio.Manipuladores;
+using AnalisadorDeBytes.Dominio.Servico;
+using AnalisadorDeBytes.Ioc;
 using AnalisadorDeBytes.IoC;
 using System.Threading.Tasks;
 
-namespace AnalisadorDeBytes.Dominio
+namespace AnalisadorDeBytes.Dominio.Modelo
 {
     public class Analisador : IAnalisador
     {
@@ -28,10 +30,10 @@ namespace AnalisadorDeBytes.Dominio
         {
             _geradorDeLog = new GeradorDeLog();
             _buscadorDeTextoWebFallback = new GeradorDeTextoAleatorioFallback();
-            _buscadorDeTextoWeb = new BuscadorDeTextoWeb(_buscadorDeTextoWebFallback, _geradorDeLog);
+            _buscadorDeTextoWeb = new BuscarTexto(_buscadorDeTextoWebFallback, _geradorDeLog);
             _buscarTextoEmSite = new BuscarTextoEmSite(_buscadorDeTextoWeb);
             _contadorDeBytesWebFallback = new ContadorDeBytesFallback();
-            _contadorDeBytesWeb = new ContadorDeBytesWeb(_contadorDeBytesWebFallback, _geradorDeLog);
+            _contadorDeBytesWeb = new ContarBytes(_contadorDeBytesWebFallback, _geradorDeLog);
             _contadorDeBytes = new ContadorDeBytes(_contadorDeBytesWeb);
             _geradorDeArquivo = new GeradorDeArquivo();
         }

@@ -6,6 +6,16 @@ namespace AnalisadorDeBytes.App
 {
     public class ParametrosDeAnaliseDto : IDto
     {
+        public ParametrosDeAnaliseDto(
+            TiposDeRelatorio tiposDeRelatorio, 
+            string caminhoDoArquivo, 
+            int tamanhoDoBufferEmBytes)
+        {
+            TiposDeRelatorio = tiposDeRelatorio;
+            CaminhoDoArquivo = caminhoDoArquivo;
+            TamanhoDoBufferEmBytes = tamanhoDoBufferEmBytes;
+        }
+
         public TiposDeRelatorio TiposDeRelatorio { get; set; } = TiposDeRelatorio.Tabela;
         
         [Required(ErrorMessage = "Parâmetro requerido.")]

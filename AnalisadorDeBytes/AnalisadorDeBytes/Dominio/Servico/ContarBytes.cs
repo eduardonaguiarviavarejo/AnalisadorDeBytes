@@ -1,17 +1,19 @@
-﻿using AnalisadorDeBytes.Core.Componentes.Log;
+﻿using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
+using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.Ioc;
 using PuppeteerSharp;
 using System;
 using System.Threading.Tasks;
 
-namespace AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb
+namespace AnalisadorDeBytes.Dominio.Servico
 {
-    public class ContadorDeBytesWeb : IContadorDeBytesWeb
+    public class ContarBytes : IContadorDeBytesWeb
     {
         private const string SITEWEB = "https://mothereff.in/byte-counter";
         private readonly IContadorDeBytesWebFallback _contadorDeBytesWebFallback;
         private readonly IGeradorDeLog _geradorDeLog;
 
-        public ContadorDeBytesWeb(
+        public ContarBytes(
             IContadorDeBytesWebFallback contadorDeBytesWebFallback,
             IGeradorDeLog geradorDeLog)
         {
