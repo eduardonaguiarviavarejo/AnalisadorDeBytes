@@ -1,6 +1,5 @@
 ﻿using AnalisadorDeBytes.Core.BuscadorWeb;
 using AnalisadorDeBytes.Core.Componentes.Log;
-using AnalisadorDeBytes.Infra.Crawler;
 using AnalisadorDeBytes.IoC;
 using PuppeteerSharp;
 using System;
