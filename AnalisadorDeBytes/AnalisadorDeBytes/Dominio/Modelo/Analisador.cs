@@ -32,7 +32,7 @@ namespace AnalisadorDeBytes.Dominio.Modelo
             _contadorDeBytesWebFallback = new ContadorDeBytesFallback();
             _contadorDeBytesWeb = new ContarBytesServico(_contadorDeBytesWebFallback, _geradorDeLog);
             _contadorDeBytes = new ContadorDeBytes(_contadorDeBytesWeb);
-            _geradorDeArquivo = new GeradorDeArquivo();
+            _geradorDeArquivo = new GeradorDeArquivo(_geradorDeLog);
         }
 
         public async Task<InformacoesDaAnalise> ProcessarAsync(string caminhoDoArquivo, int? tamanhoDoBufferEmBytes)

@@ -27,6 +27,7 @@ namespace AnalisadorDeBytes.Dominio.Servico
         {
 
             Browser _browse;
+            
 
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 

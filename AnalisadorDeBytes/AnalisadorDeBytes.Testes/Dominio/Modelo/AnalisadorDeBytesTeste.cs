@@ -1,5 +1,7 @@
 ﻿using AnalisadorDeBytes.Core.BuscadorWeb;
 using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
+using AnalisadorDeBytes.Core.Componentes.GeradorDeLog;
+using AnalisadorDeBytes.Core.Componentes.Log;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
@@ -25,12 +27,14 @@ namespace AnalisadorDeBytes.Testes.Dominio
         private readonly IGeradorDeArquivo _geradorDeArquivo;
         private readonly Mock<IBuscadorDeTextoWeb> _buscadorWeb = new Mock<IBuscadorDeTextoWeb>();
         private readonly Mock<IContadorDeBytesWeb> _contadorDeBytesWeb = new Mock<IContadorDeBytesWeb>();
+        private readonly IGeradorDeLog _geradorDeLog;
 
         public AnalisadorDeBytesTeste()
         {
+            _geradorDeLog = new GeradorDeLog();
             _buscarTextoEmSite = new BuscarTextoEmSite(_buscadorWeb.Object);
             _contadorDeBytes = new ContadorDeBytes(_contadorDeBytesWeb.Object);
-            _geradorDeArquivo = new GeradorDeArquivo();
+            _geradorDeArquivo = new GeradorDeArquivo(_geradorDeLog);
             _analisador = new Analisador();
 
             _buscadorWeb.Setup(x => x.Buscar())

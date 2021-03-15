@@ -28,11 +28,9 @@ namespace AnalisadorDeBytes.App
 
         public async Task<AnaliseDto> AnalisarAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
         {
-            var retornoDaAnalise = await AnalisarParametrosAsync(parametrosDeAnaliseDto);
-
+            var retornoDaAnalise = await AnalisarParametrosAsync(parametrosDeAnaliseDto);            
 
             await ImprimirRelatorioAsync(retornoDaAnalise, parametrosDeAnaliseDto.TiposDeRelatorio);
-
 
             return retornoDaAnalise;
         }
@@ -72,6 +70,8 @@ namespace AnalisadorDeBytes.App
 
         private async Task ImprimirRelatorioAsync(AnaliseDto analiseDto, TiposDeRelatorio tiposDeRelatorio)
         {
+            await _geradorDeLog.GerarLogAsync("Imprimindo os dados de annálise.");
+
             if (tiposDeRelatorio == TiposDeRelatorio.Tabela)
             {
                 ImprimirTabelaAsync(analiseDto);
@@ -99,6 +99,7 @@ namespace AnalisadorDeBytes.App
                 "Tempo Total Geração Arquivo", 
                 "Tempo Médio Geração Arquivo")
                 .WithTextAlignment(new Dictionary<int, TextAligntment>() {
+                    {1, TextAligntment.Right},
                     {3, TextAligntment.Right},
                     {4, TextAligntment.Right},
                     {5, TextAligntment.Right}

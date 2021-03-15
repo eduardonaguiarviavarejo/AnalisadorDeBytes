@@ -1,6 +1,5 @@
 ﻿using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
 using AnalisadorDeBytes.Core.Componentes.Log;
-using AnalisadorDeBytes.Infra.Crawler;
 using AnalisadorDeBytes.Ioc;
 using PuppeteerSharp;
 using System;
@@ -26,6 +25,8 @@ namespace AnalisadorDeBytes.Dominio.Servico
         {
 
             Browser _browser;
+
+            await _geradorDeLog.GerarLogAsync($"Iniciando crawler para contagem de bytes.");
 
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 
