@@ -1,9 +1,8 @@
-﻿using AnalisadorDeBytes.Dominio.Comandos;
-using AnalisadorDeBytes.Dominio.Modelo;
+﻿using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.Dominio.Comandos;
 using AnalisadorDeBytes.Dominio.Respostas;
 using AnalisadorDeBytes.IoC;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +13,16 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
     {
         private const int TAMANHODOBUFFEREMBYTESDEFAULT = 1000000;
 
+        private readonly IGeradorDeLog _geradorDeLog;
+
+        public GeradorDeArquivo(IGeradorDeLog geradorDeLog)
+        {
+            _geradorDeLog = geradorDeLog;
+        }
+
         public async Task<GeradorDeArquivoResposta> ExecutarAsync(GeradorDeArquivoComando comando)
         {
-            Stopwatch diagnostico = new Stopwatch();
-
-            diagnostico.Start();
+            await _geradorDeLog.GerarLogAsync("Iniciando a gravação do arquivo.");
 
             var tamanhoBufferValidado = comando.TamanhoDoBufferEmBytes ?? TAMANHODOBUFFEREMBYTESDEFAULT;
 
@@ -29,8 +33,6 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
             string textoIncremental = null;
 
             var numeroDeIteracoes = 0;
-
-
 
             do
             {
@@ -46,8 +48,6 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 
             var nomeDoArquivo = await EscreverArquivo(comando.CaminhoDoArquivo, buffer);
 
-            diagnostico.Stop();
-
             return new GeradorDeArquivoResposta(nomeDoArquivo, buffer.Length, comando.CaminhoDoArquivo, numeroDeIteracoes);
         }
 
@@ -57,7 +57,7 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
         }
 
         private async Task<string> EscreverArquivo(string caminhoDoArquivo, byte[] buffer)
-        {
+        {            
             string nomeDoArquivo = $"{DateTime.Now.ToString("yyyy-MM-dd-HHmmss")}-arquivo-gerado.txt";
 
             using (var fs = new FileStream($@"{ caminhoDoArquivo }\{ nomeDoArquivo }", FileMode.Create, FileAccess.Write))
