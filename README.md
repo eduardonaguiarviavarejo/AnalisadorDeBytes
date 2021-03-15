@@ -7,11 +7,13 @@
 
 
 ## Como usar:
+
+### No PowerShell digite:
 ```
 git clone https://github.com/eduardonaguiarviavarejo/AnalisadorDeBytes.git
 ```
 ```
-cd AnalisadorDeBytes
+cd AnalisadorDeBytes\AnalisadorDeBytes
 ```
 ```
 dotnet build
@@ -35,8 +37,11 @@ Formato da impressão em tela:
      
 ## Testes
 #### Executando testes unitários:
+
+-  1: Criar pasta "c:\data"
+-  2: Executar comando:
 ```
-dotnet run test
+dotnet test
 ```
 
 
