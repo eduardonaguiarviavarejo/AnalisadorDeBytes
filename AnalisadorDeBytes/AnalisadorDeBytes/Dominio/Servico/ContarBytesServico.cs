@@ -26,6 +26,8 @@ namespace AnalisadorDeBytes.Dominio.Servico
 
             Browser _browser;
 
+            await _geradorDeLog.GerarLogAsync("Inicializando o crawler.");
+
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 
             _browser = await Puppeteer.LaunchAsync(new LaunchOptions

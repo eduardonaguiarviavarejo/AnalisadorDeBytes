@@ -99,6 +99,7 @@ namespace AnalisadorDeBytes.App
                 "Tempo Total Geração Arquivo", 
                 "Tempo Médio Geração Arquivo")
                 .WithTextAlignment(new Dictionary<int, TextAligntment>() {
+                    {1, TextAligntment.Right},
                     {3, TextAligntment.Right},
                     {4, TextAligntment.Right},
                     {5, TextAligntment.Right}
