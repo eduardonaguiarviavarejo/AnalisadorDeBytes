@@ -5,8 +5,19 @@
 
 [Dotnet 5 sdk (SDK 5.0.201)](https://dotnet.microsoft.com/download/dotnet/5.0)
 
+## Construçao
 
-## Como usar:
+Para o desenho do sofware fora escolhidos os padroes Command (para o roteiro de execução das etapas em cadeia), Strategy (para estratégias de fallback) e Singleton (evitando memory leak na criação de objetos).
+
+## Frameworks utilizados:
+[Puppeteer-sharp](https://github.com/hardkoded/puppeteer-sharp): Crawler utilizado para buscar conteúdo nos sites relacionados. 
+
+[ConsoleTableExt](https://github.com/minhhungit/ConsoleTableExt/): Exibição de relatório em formato tabela.
+
+[Commandline](https://github.com/commandlineparser/commandline): Commandline de execuçao do projeto.
+
+
+## Como utilizar:
 
 ### No PowerShell digite:
 ```
