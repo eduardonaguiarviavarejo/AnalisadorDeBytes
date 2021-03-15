@@ -13,7 +13,7 @@ namespace AnalisadorDeBytes
             [Option('f', "formato", Required = false, HelpText = "Formato do relatorio")]
             public TiposDeRelatorio TipoRelatorio { get; set; }
 
-            [Option('c', "caminho", Required = false, HelpText = "Caminho de gravaçao do arquivo. Ex.: c:\arquivo.")]
+            [Option('c', "caminho", Required = false, HelpText = @"Caminho de gravaçao do arquivo. Ex.: c:\.")]
             public string Caminho { get; set; }
 
             [Option('b', "buffer", Required = false, HelpText = "Tamanho do buffer em bytes.")]
@@ -23,12 +23,13 @@ namespace AnalisadorDeBytes
 
         static async Task Main(string[] args)
         {
-            await Parser.Default.ParseArguments<Options>(args)
+            await Parser.Default
+                .ParseArguments<Options>(args)
                .WithParsedAsync<Options>(RunOptionsAsync);
         }
 
         static async Task RunOptionsAsync(Options opts)
-        {            
+        {
             await new AnalisadorApp().AnalisarAsync(new ParametrosDeAnaliseDto(opts.Caminho, opts.TamanhoBuffer, opts.TipoRelatorio));
         }
     }

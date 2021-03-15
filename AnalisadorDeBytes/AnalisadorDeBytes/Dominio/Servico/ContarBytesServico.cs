@@ -26,7 +26,7 @@ namespace AnalisadorDeBytes.Dominio.Servico
 
             Browser _browser;
 
-            await _geradorDeLog.GerarLogAsync("Inicializando o crawler.");
+            await _geradorDeLog.GerarLogAsync($"Iniciando crawler para contagem de bytes.");
 
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 
