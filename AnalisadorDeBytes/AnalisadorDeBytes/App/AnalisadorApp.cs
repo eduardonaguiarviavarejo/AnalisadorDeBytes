@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AnalisadorDeBytes.App
@@ -17,6 +18,7 @@ namespace AnalisadorDeBytes.App
     {
         private readonly IAnalisador _analisador;
         private readonly IGeradorDeLog _geradorDeLog;
+        private static readonly Regex _regex = new Regex(@"^(([a-zA-Z]:)|(\))(\{1}|((\{1})[^\]([^/:*?<>""|]*))+)$");
 
         public AnalisadorApp()
         {
@@ -24,19 +26,26 @@ namespace AnalisadorDeBytes.App
             _geradorDeLog = new GeradorDeLog();
         }
 
-        public async Task AnalisarAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
+        public async Task<AnaliseDto> AnalisarAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
         {
             var retornoDaAnalise = await AnalisarParametrosAsync(parametrosDeAnaliseDto);
 
 
             await ImprimirRelatorioAsync(retornoDaAnalise, parametrosDeAnaliseDto.TiposDeRelatorio);
+
+
+            return retornoDaAnalise;
         }
 
         private async Task<AnaliseDto> AnalisarParametrosAsync(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
         {
+            Validar(parametrosDeAnaliseDto);
+
             Stopwatch diagnostico = new Stopwatch();
             diagnostico.Start();
+            
             var retorno = await _analisador.ProcessarAsync(parametrosDeAnaliseDto.CaminhoDoArquivo, parametrosDeAnaliseDto.TamanhoDoBufferEmBytes);
+            
             diagnostico.Stop();
 
             return new AnaliseDto(
@@ -46,6 +55,19 @@ namespace AnalisadorDeBytes.App
                 retorno.NumeroDeIteracoes,
                 diagnostico.Elapsed.ToTimeFormat(),
                 diagnostico.Elapsed.Divide(retorno.NumeroDeIteracoes).ToTimeFormat());
+        }
+
+        private void Validar(ParametrosDeAnaliseDto parametrosDeAnaliseDto)
+        {
+            if (string.IsNullOrEmpty(parametrosDeAnaliseDto.CaminhoDoArquivo))
+            {
+                throw new ApplicationException("-Caminho do arquivo não pode estar vazio.");
+            }
+
+            if (_regex.IsMatch(parametrosDeAnaliseDto.CaminhoDoArquivo))
+            {
+                throw new ApplicationException("-Caminho do arquivo em um formato invalido.");
+            }
         }
 
         private async Task ImprimirRelatorioAsync(AnaliseDto analiseDto, TiposDeRelatorio tiposDeRelatorio)

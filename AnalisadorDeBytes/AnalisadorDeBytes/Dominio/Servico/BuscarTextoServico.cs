@@ -1,5 +1,6 @@
 ﻿using AnalisadorDeBytes.Core.BuscadorWeb;
 using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.Infra.Crawler;
 using AnalisadorDeBytes.IoC;
 using PuppeteerSharp;
 using System;
@@ -25,14 +26,16 @@ namespace AnalisadorDeBytes.Dominio.Servico
         public async Task<string> Buscar()
         {
 
-            Browser _browse;
+            //Browser _browse;
 
-            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+            //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 
-            _browse = await Puppeteer.LaunchAsync(new LaunchOptions
-            {
-                Headless = true
-            });
+            //_browse = await Puppeteer.LaunchAsync(new LaunchOptions
+            //{
+            //    Headless = true
+            //});
+
+            var _browse = Crawler.GetInstanceAsync();
 
 
             using (var page = await _browse.NewPageAsync())

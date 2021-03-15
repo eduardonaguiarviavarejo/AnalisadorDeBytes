@@ -1,15 +1,19 @@
 ﻿using AnalisadorDeBytes.App;
 using AnalisadorDeBytes.Dominio.Modelo;
 using AnalisadorDeBytes.IoC;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace AnalisadorDeBytes.Testes.App
 {
-    public class AnaliseAppTeste
+    public class AnaliseAppTeste : IDisposable
     {
-        private readonly int _tamanhoDoBufferBytes = 100000000;
+        private readonly int _tamanhoDoBufferBytes = 1000000;
         private readonly string _caminhoArquivo = @"c:\";
         private readonly IAnalisadorApp _analisadorApp;
+        private string arquivo = null;
         
 
         public AnaliseAppTeste()
@@ -18,12 +22,22 @@ namespace AnalisadorDeBytes.Testes.App
         }
 
 
-        public async System.Threading.Tasks.Task AnalisarAsync_DeveGerarInformacoesDeAnaliseAsync()
+        [Fact]
+        public async Task AnalisarAsync_DeveGerarInformacoesDeAnaliseAsync()
         {
-            await _analisadorApp.AnalisarAsync(new ParametrosDeAnaliseDto(_caminhoArquivo, _tamanhoDoBufferBytes, TiposDeRelatorio.Json));
+            var retorno = await _analisadorApp.AnalisarAsync(new ParametrosDeAnaliseDto(_caminhoArquivo, _tamanhoDoBufferBytes, TiposDeRelatorio.Json));
 
+            arquivo = Path.Combine(retorno.CaminhoFisico, retorno.NomeDoArquivo);
+                                    
+            Assert.True(File.Exists(arquivo));
+        }
 
-            //Verificar geracao arquivo
+        public void Dispose()
+        {
+            if (File.Exists(arquivo))
+            {
+                File.Delete(arquivo);
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
 using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.Infra.Crawler;
 using AnalisadorDeBytes.Ioc;
 using PuppeteerSharp;
 using System;
@@ -24,15 +25,17 @@ namespace AnalisadorDeBytes.Dominio.Servico
         public async Task<int> ContarBytesPorTextoAsync(string texto)
         {
 
-            Browser _browser;
+            //Browser _browser;
 
-            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+            //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 
-            _browser = await Puppeteer.LaunchAsync(new LaunchOptions
-            {
-                Headless = true
+            //_browser = await Puppeteer.LaunchAsync(new LaunchOptions
+            //{
+            //    Headless = true
 
-            });
+            //});
+
+            var _browser = Crawler.GetInstanceAsync();
 
             try
             {

@@ -1,4 +1,5 @@
 ﻿using AnalisadorDeBytes.IoC;
+using System;
 
 namespace AnalisadorDeBytes.Dominio.Comandos
 {
@@ -9,6 +10,17 @@ namespace AnalisadorDeBytes.Dominio.Comandos
             int? tamanhoDoBufferEmBytes,
             string textoAnalisado)
         {
+            
+            if (string.IsNullOrEmpty(caminhoDoArquivo))
+            {
+                 throw new ApplicationException("-Caminho do arquivo não pode estar vazio.");
+            }
+
+            if (string.IsNullOrEmpty(textoAnalisado))
+            {
+                throw new ApplicationException("-O texto não pode estar vazio.");                
+            }
+
             CaminhoDoArquivo = caminhoDoArquivo;
             TamanhoDoBufferEmBytes = tamanhoDoBufferEmBytes;
             TextoAnalisado = textoAnalisado;
