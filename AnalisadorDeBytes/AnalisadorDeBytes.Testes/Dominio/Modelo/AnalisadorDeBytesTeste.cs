@@ -15,7 +15,7 @@ namespace AnalisadorDeBytes.Testes.Dominio
 {
     public class AnalisadorDeBytesTeste : IDisposable
     {
-        private readonly string _caminhoFisicoArquivo = @"c:\dev";
+        private readonly string _caminhoFisicoArquivo = @"c:\data";
         private readonly int _tamanhoMaximoBufferEmBytes = 5024000;
         private readonly string _textoMockado = "O fluxo deve se repetir até que o arquivo tenha o tamanho de 100MB como tamanho padrão";
         private readonly int _quantidadeBytesRetornada = 1024000;
