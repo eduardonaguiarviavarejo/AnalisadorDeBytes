@@ -26,16 +26,14 @@ namespace AnalisadorDeBytes.Dominio.Servico
         public async Task<string> Buscar()
         {
 
-            //Browser _browse;
+            Browser _browse;
 
-            //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 
-            //_browse = await Puppeteer.LaunchAsync(new LaunchOptions
-            //{
-            //    Headless = true
-            //});
-
-            var _browse = Crawler.GetInstanceAsync();
+            _browse = await Puppeteer.LaunchAsync(new LaunchOptions
+            {
+                Headless = true
+            });
 
 
             using (var page = await _browse.NewPageAsync())
