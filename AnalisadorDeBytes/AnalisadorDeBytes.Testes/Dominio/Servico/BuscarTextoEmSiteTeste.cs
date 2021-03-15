@@ -3,7 +3,6 @@ using AnalisadorDeBytes.Dominio.Comandos;
 using AnalisadorDeBytes.Dominio.Manipuladores;
 using AnalisadorDeBytes.IoC;
 using Moq;
-using System;
 using Xunit;
 
 namespace AnalisadorDeBytes.Testes.Dominio
@@ -14,7 +13,6 @@ namespace AnalisadorDeBytes.Testes.Dominio
         private readonly IBuscarTextoEmSite _buscarTextoEmSite;
         private readonly Mock<IBuscadorDeTextoWeb> _buscadorWeb = new Mock<IBuscadorDeTextoWeb>();
 
-
         public BuscarTextoEmSiteTeste()
         {
             _buscarTextoEmSite = new BuscarTextoEmSite(_buscadorWeb.Object);
@@ -23,21 +21,17 @@ namespace AnalisadorDeBytes.Testes.Dominio
         public async void ExecutarAsync_DeveriaBuscarTextosNoSite()
         {
             _buscadorWeb.Setup(x => x.Buscar())
-                .ReturnsAsync(_textoMockado);
-
+              .ReturnsAsync(_textoMockado);
 
             var resposta = await _buscarTextoEmSite
-                .ExecutarAsync(new BuscarTextoEmSiteComandos());
+              .ExecutarAsync(new BuscarTextoEmSiteComandos());
 
-                                   
             Assert.NotNull(resposta.TextoRecuperadoDaWeb);
         }
-
 
         public async void ExecutarAsync_NaoDeveriaBuscarTextosNoSiteSiteInexistente()
         {
             var resposta = await _buscarTextoEmSite.ExecutarAsync(new BuscarTextoEmSiteComandos());
-
 
             Assert.NotNull(resposta.TextoRecuperadoDaWeb);
         }

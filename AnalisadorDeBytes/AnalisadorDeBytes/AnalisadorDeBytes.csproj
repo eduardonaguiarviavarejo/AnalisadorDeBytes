@@ -5,23 +5,27 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="ConsoleTableExt" Version="3.1.5" />
     <PackageReference Include="PuppeteerSharp" Version="2.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Dominio\Estrategia\TextosAleatorios.Designer.cs">
+    <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>TextosAleatorios.resx</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Dominio\Estrategia\TextosAleatorios.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TextosAleatorios.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

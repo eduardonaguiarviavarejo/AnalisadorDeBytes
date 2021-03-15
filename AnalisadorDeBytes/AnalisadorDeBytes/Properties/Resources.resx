@@ -118,22 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="1" xml:space="preserve">
-    <value>WebDriver doesn’t know how to do anything other than talk to the browser driver. As a result, you’ll need some sort of test framework to execute your tests, make assertions, and report test status. We’ll use NUnit, which is popular, free, and easy to learn and use.  There are many other test frameworks for the .NET platform. NUnit test cases are nothing more than class files added to the Visual Studio class library project. You can rename the initial “Class1.cs” file added to the project by default, or you can add another complete class by right-clicking the project and selecting Add Class.</value>
+    <value>I write a lot of command line utilities - typically code generators and such. These tools follow a basic overall pattern of command line parsing, usage reporting and exception handling. Due to this basic structure being similar across tools, I start with some boilerplate code which I then modify to create them. I will be sharing and explaining that code here. After trying many different techniques for building these tools over the years, I've settled on a basic process that works well and that begins with this code.</value>
   </data>
   <data name="2" xml:space="preserve">
-    <value>Below is a complete test case that starts a browser locally, executes a very simple test, then closes out the browser instance. The example is extremely simple and doesn’t follow normal practices like using Page Object Patterns. This is example code, not production code!</value>
+    <value>Processing command line arguments is something that almost seems like it can be generated or generalized. The truth is, it can be, but the additional complexity cost often isn't worth it. Even if we had a way to generalize argument processing, it still holds that adding, removing or changing an argument will require changes in the logic of the application itself, so you're not really removing much - if any work. This has been my experience for the most part. The other issue is that while it's quite easy to generalize 80% of the argument cases, the other 20% are non-trivial. It becomes less justified than writing specialized argument processing code.</value>
   </data>
   <data name="3" xml:space="preserve">
-    <value>Getting started with WebDriver’s C# bindings in Visual Studio is  easy -- if you know how to connect the pieces together. Once the pieces are in place, development is a snap. In this article we’ll show you how to get the various parts and pieces, plus write and run one simple test.
-
-This article is one in a series showing how to get WebDriver working in various editors and language platforms.
-
-For an overview of how WebDriver works, please see the section “WebDriver Overview” in the blogpost “Getting Started with Webdriver/Selenium for Java in Eclipse” here.</value>
+    <value>Mais uma noite como todas as anteriores. Pego minha caneca de café cheia, acendo meu ultimo cigarro e corro pra velha janela do quarto. Observo a noite fria e chuvosa, até parece confortável por um momento, se não fossem as dezenas de preocupações que me desmotivam a cada dia.</value>
   </data>
   <data name="4" xml:space="preserve">
-    <value>The bulk of the command-line functionality is found within the Microsoft.Extensions.CommandLineUtils NuGet package. Included in the assembly is a CommandLineApplication class that provides command-line parsing with support for short and long names for options, values (one or more) assigned with either a colon or an equals sign, and symbols like -? for help. Speaking of help, the class includes support for displaying the help text automatically. Figure 1 shows some sample command lines that would be supported.</value>
+    <value>Penso em você, mesmo sabendo o quão longe está de mim, sinto aquele amor que continua a me desgraçar intensamente a cada dia, e penso quando enfim poderei te ter comigo. Sei lá, o café chega ao fim e trago a ultima ponta, nada muda. É como se eu fosse passar por isso mais uns longos anos a frente.</value>
   </data>
   <data name="5" xml:space="preserve">
-    <value>As described next, there are multiple argument types, one of which is called an “Argument.” The overloading of the term argument to refer to the values specified on the command line versus the command-line configuration data can lead to significant ambiguity. Therefore, for the remainder of the article, I’ll distinguish between a generic argument of any kind—specified after the executable name—and the argument type called “Argument” (title case) by the casing. Similarly, I’ll distinguish the other argument types, Option and Command, using title case rather than the lowercase terms that generically refer to the argument. Please take note of this as it will be important throughout the remainder of the article.</value>
+    <value>Penso em você, mesmo sabendo o quão longe está de mim, sinto aquele amor que continua a me desgraçar intensamente a cada dia, e penso quando enfim poderei te ter comigo. Sei lá, o café chega ao fim e trago a ultima ponta, nada muda. É como se eu fosse passar por isso mais uns longos anos a frente.</value>
   </data>
 </root>

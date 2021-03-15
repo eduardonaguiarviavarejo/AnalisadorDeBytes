@@ -1,17 +1,20 @@
-﻿using AnalisadorDeBytes.Core.Componentes.Log;
+﻿using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
+using AnalisadorDeBytes.Core.Componentes.Log;
+using AnalisadorDeBytes.Infra.Crawler;
+using AnalisadorDeBytes.Ioc;
 using PuppeteerSharp;
 using System;
 using System.Threading.Tasks;
 
-namespace AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb
+namespace AnalisadorDeBytes.Dominio.Servico
 {
-    public class ContadorDeBytesWeb : IContadorDeBytesWeb
+    public class ContarBytesServico : IContadorDeBytesWeb
     {
         private const string SITEWEB = "https://mothereff.in/byte-counter";
         private readonly IContadorDeBytesWebFallback _contadorDeBytesWebFallback;
         private readonly IGeradorDeLog _geradorDeLog;
 
-        public ContadorDeBytesWeb(
+        public ContarBytesServico(
             IContadorDeBytesWebFallback contadorDeBytesWebFallback,
             IGeradorDeLog geradorDeLog)
         {
@@ -22,15 +25,17 @@ namespace AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb
         public async Task<int> ContarBytesPorTextoAsync(string texto)
         {
 
-            Browser _browser;
+            //Browser _browser;
 
-            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+            //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
 
-            _browser = await Puppeteer.LaunchAsync(new LaunchOptions
-            {
-                Headless = true
+            //_browser = await Puppeteer.LaunchAsync(new LaunchOptions
+            //{
+            //    Headless = true
 
-            });
+            //});
+
+            var _browser = Crawler.GetInstanceAsync();
 
             try
             {

@@ -1,4 +1,4 @@
-﻿namespace AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb
+﻿namespace AnalisadorDeBytes.Ioc
 {
     public interface IContadorDeBytesWebFallback
     {

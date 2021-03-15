@@ -5,6 +5,6 @@ namespace AnalisadorDeBytes.IoC
 {
     public interface IAnalisador
     {
-        Task<InformacoesDaAnalise> ProcessarAsync(string caminhoDoArquivo, int tamanhoDoBufferEmBytes = 1048576);
+        Task<InformacoesDaAnalise> ProcessarAsync(string caminhoDoArquivo, int? tamanhoDoBufferEmBytes);
     }
 }

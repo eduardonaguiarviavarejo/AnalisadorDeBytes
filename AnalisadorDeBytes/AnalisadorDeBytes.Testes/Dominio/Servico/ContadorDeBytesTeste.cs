@@ -23,20 +23,15 @@ namespace AnalisadorDeBytes.Testes.Dominio
         public async System.Threading.Tasks.Task ExecutarAsync_DeveContarBytesAsync()
         {
             _contadorDeBytesWeb.Setup(x => x.ContarBytesPorTextoAsync(_textoMock))
-                .ReturnsAsync(_quantidadeBytesRetornada);
+              .ReturnsAsync(_quantidadeBytesRetornada);
 
-            
-            
             var resposta = await _contadorDeBytes.ExecutarAsync(new ContadorDeBytesComando(_textoMock));
 
-
-            
             Assert.True(resposta.TamanhoDoTextoEmBytes > 0);
         }
 
-
         [Fact]
-        public void ExecutarAsync_NaoDeveContarBytes() 
+        public void ExecutarAsync_NaoDeveContarBytesTextoEntradaVazio()
         {
             var resposta = _contadorDeBytes.ExecutarAsync(new ContadorDeBytesComando(string.Empty));
         }

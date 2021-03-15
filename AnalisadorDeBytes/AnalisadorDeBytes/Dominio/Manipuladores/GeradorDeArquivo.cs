@@ -12,12 +12,17 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 {
     public class GeradorDeArquivo : IGeradorDeArquivo
     {
+        private const int TAMANHODOBUFFEREMBYTESDEFAULT = 1000000;
+
         public async Task<GeradorDeArquivoResposta> ExecutarAsync(GeradorDeArquivoComando comando)
         {
             Stopwatch diagnostico = new Stopwatch();
+
             diagnostico.Start();
 
-            var buffer = new byte[comando.TamanhoDoBuffer];
+            var tamanhoBufferValidado = comando.TamanhoDoBufferEmBytes ?? TAMANHODOBUFFEREMBYTESDEFAULT;
+
+            var buffer = new byte[tamanhoBufferValidado * 1024];
 
             var tamanhoDoTexto = RetornarTamanhoEmBytesDaString(comando.TextoAnalisado);
 
@@ -27,15 +32,14 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 
 
 
-            while (tamanhoDoTexto <= comando.TamanhoDoBuffer)
+            do
             {
                 textoIncremental += comando.TextoAnalisado;
 
                 tamanhoDoTexto = RetornarTamanhoEmBytesDaString(textoIncremental);
 
                 numeroDeIteracoes++;
-            }
-
+            } while (tamanhoDoTexto < tamanhoBufferValidado);
 
 
             buffer = ASCIIEncoding.Unicode.GetBytes(textoIncremental);
@@ -44,7 +48,7 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 
             diagnostico.Stop();
 
-            return new GeradorDeArquivoResposta(nomeDoArquivo, buffer.Length, comando.CaminhoDoArquivo, new Metricas(numeroDeIteracoes, diagnostico.Elapsed, diagnostico.Elapsed / numeroDeIteracoes));
+            return new GeradorDeArquivoResposta(nomeDoArquivo, buffer.Length, comando.CaminhoDoArquivo, numeroDeIteracoes);
         }
 
         private int RetornarTamanhoEmBytesDaString(string texto)
@@ -54,9 +58,9 @@ namespace AnalisadorDeBytes.Dominio.Manipuladores
 
         private async Task<string> EscreverArquivo(string caminhoDoArquivo, byte[] buffer)
         {
-            string nomeDoArquivo = $"{DateTime.Now.ToString("YYYY-MM-DD-HHmmss")}-arquivo-gerado.txt";
+            string nomeDoArquivo = $"{DateTime.Now.ToString("yyyy-MM-dd-HHmmss")}-arquivo-gerado.txt";
 
-            using (var fs = new FileStream(nomeDoArquivo, FileMode.Create, FileAccess.Write))
+            using (var fs = new FileStream($@"{ caminhoDoArquivo }\{ nomeDoArquivo }", FileMode.Create, FileAccess.Write))
             {
                 await fs.WriteAsync(buffer, 0, buffer.Length);
             }

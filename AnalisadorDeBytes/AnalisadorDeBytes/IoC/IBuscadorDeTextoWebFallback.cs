@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace AnalisadorDeBytes.Core.BuscadorWeb
+namespace AnalisadorDeBytes.IoC
 {
     public interface IBuscadorDeTextoWebFallback
     {

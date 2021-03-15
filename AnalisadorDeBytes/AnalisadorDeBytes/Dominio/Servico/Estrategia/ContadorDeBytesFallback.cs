@@ -1,7 +1,7 @@
-﻿using AnalisadorDeBytes.Core.Componentes.ContadorDeBytesWeb;
+﻿using AnalisadorDeBytes.Ioc;
 using System.Text;
 
-namespace AnalisadorDeBytes.Dominio.Estrategia.ContadorDeBytesFallback
+namespace AnalisadorDeBytes.Dominio.Servico.Estrategia
 {
     public class ContadorDeBytesFallback : IContadorDeBytesWebFallback
     {
