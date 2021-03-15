@@ -36,7 +36,7 @@ dotnet run --project .\AnalisadorDeBytes\ --f 0 --c "c:\dev" --b 1000000
 ## Parâmetros: 
 
 #### --c | --caminho:
-***[Requerido]*** Caminho de destino do arquivo. Ex.: c:\.
+***[Requerido]*** Caminho de destino do arquivo. Ex.: "c:\".
 
 #### --b | --buffer:
 Tamanho do buffer em bytes. (Caso não digitado o valor padrão é 1000000).
