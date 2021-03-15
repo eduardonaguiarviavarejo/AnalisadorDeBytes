@@ -11,7 +11,7 @@ namespace AnalisadorDeBytes.Testes.App
     public class AnaliseAppTeste : IDisposable
     {
         private readonly int _tamanhoDoBufferBytes = 1000000;
-        private readonly string _caminhoArquivo = @"c:\";
+        private readonly string _caminhoArquivo = @"c:\dev";
         private readonly IAnalisadorApp _analisadorApp;
         private string arquivo = null;
         
